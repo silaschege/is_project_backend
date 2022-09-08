@@ -2,7 +2,7 @@ from django.utils.timezone import now
 from django.db import models
 
 # Create your models here.
-class productCategory(models.Model):
+class ProductCategoryModel(models.Model):
     # class categoryTypeChoices(models.Choices):
     #     Herbivorous= 'herbivrous'
     #     Seed = 'seed'
@@ -13,12 +13,12 @@ class productCategory(models.Model):
     def __str__(self):
         return self.categoryName
 
-class product(models.Model):
+class ProductModel(models.Model):
     productName = models.CharField(max_length=255)
-    productCategory = models.ForeignKey('productCategory',on_delete=models.CASCADE,)
-    pieces = models.IntegerField()
+    productCategory = models.ForeignKey(ProductCategoryModel,on_delete=models.CASCADE,)
+    quantity = models.IntegerField()
     price = models.FloatField(max_length=7)
-    quantityPackaging = models.CharField(max_length=255)
+    packagingQuantity = models.CharField(max_length=255)
     created_at = models.DateTimeField(default=now)
     product_image = models.ImageField(upload_to='product_images/')
 
