@@ -9,3 +9,14 @@ from django.shortcuts import render
 # remove installment
 # calculating total and storing it 
 
+# add installment and decrease product quantity
+# calculae totalinstallments
+class AddInstallments()
+
+class IncreaseInstallment()
+
+class DecreaseInstallment()
+
+class RemoveInstallment()
+
+
