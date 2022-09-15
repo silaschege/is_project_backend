@@ -31,3 +31,6 @@ class ProductModel(models.Model):
 
     def __str__(self):
       return self.productName
+
+# one more table should be added for the product 
+# eg maize that will the be connected to the category and the product to the product type table
