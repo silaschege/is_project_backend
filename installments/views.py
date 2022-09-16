@@ -74,7 +74,7 @@ class AddInstallments(APIView):
             )
 
 
-class IncreaseInstallmentQuantity(APIView):
+class UpdateInstallmentQuantity(APIView):
     # new total amoutn will be uodated from frontend
     def put(self,request):
         try:

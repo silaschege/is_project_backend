@@ -25,7 +25,6 @@ class ManufactureRegisterCreateView (APIView):
                 manufactureName = manufactureName,
                 email = email,
                 country = country,
-                country = country,
                 location= location,
                 user = request.user
             )

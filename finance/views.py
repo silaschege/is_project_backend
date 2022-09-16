@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 # record payment with installment 
 # check if order if blance is zero and make balance into zero
-# balanc eis difference of total sum of installments minus the total amount paid 
-# toatl amout paid is total amount paid plus previous total
+# balanc is difference of total sum of installments minus the total amount paid 
+# toatal amout paid is total amount paid plus previous total amount paid 
 # change installment stattus ro paid if balance is zero
-# balance is zero then it is moced to shipping
+# balance is zero then it is moved to shipping
