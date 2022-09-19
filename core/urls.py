@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from finance.routes import finance_router
+
 
 
 
@@ -19,6 +19,8 @@ urlpatterns = [
     path('manufacturer/',include('manufacturer.urls'),name='manufacturer'),
     path('product/',include('product.urls'),name='product'),
     path('installment/',include('installments.urls'),name='product'),
+    path ('finance/',include('finance.urls'),name='finance'),
+    path('shipping/',include('shipping.urls'),name='shipping'),
     path('admin/', admin.site.urls),
     
     # path ('/finance' ,include(finance_router.urls,'finance')),

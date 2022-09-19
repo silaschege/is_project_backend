@@ -5,6 +5,7 @@ from installments.models import InstallmentModel
 
 
 # Create your models here.
+# there should be an improvement after adding plant categories for amount per category
 class PaymentLogModel(models.Model):
     user_id =  models.ManyToManyField(User)
     installment_id = models.ManyToManyField(InstallmentModel)
