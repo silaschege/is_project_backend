@@ -23,7 +23,7 @@ urlpatterns = [
     path('shipping/',include('shipping.urls'),name='shipping'),
     path('admin/', admin.site.urls),
     
-    # path ('/finance' ,include(finance_router.urls,'finance')),
+    
 
  
 ]

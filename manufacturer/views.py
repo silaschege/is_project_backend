@@ -6,7 +6,7 @@ from rest_framework import permissions,status
 from .serializer import ManuFacturerRegisterSerializer
 
 # Create your views here.
-# register a manufacturer when they are new to the sytem
+# register a manufacturer when they are new to the system
 # update  the manufacturer data in the system
 # deleting the manufacturer will happen when you elete the admin maufacturer 
 

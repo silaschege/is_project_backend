@@ -75,7 +75,7 @@ class AddInstallments(APIView):
 
 
 class UpdateInstallmentQuantity(APIView):
-    # new total amoutn will be uodated from frontend
+    # new total amoutn will be updated from frontend
     def put(self,request):
         try:
             data = request.data
@@ -156,7 +156,7 @@ class UpdateInstallmentQuantity(APIView):
 
 # there should be a listener that when an installment is deleted it notifies the manufacturer and also if 
 # any money was paid the money minus some sum moves into the wallet
-# delets and also updates the product table
+# deletes and also updates the product table
 class RemoveInstallment(APIView):
     def delete(self,request):
         try:

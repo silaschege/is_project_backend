@@ -62,7 +62,7 @@ class LandRegisterUpdateView():
         land_objects.landSize = data['landSize']
 
         land_objects.save()
-        return Response(serializer.data)
+        return Response(serializers.data)
 
 class LandRegisterDeleteView():
     def delete(self, request):
