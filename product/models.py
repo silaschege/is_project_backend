@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.utils.timezone import now
 from django.db import models
 from manufacturer.models import ManufactureRegisterModel
@@ -14,10 +15,18 @@ class ProductCategoryModel(models.Model):
     def __str__(self):
         return self.categoryName
 
+# one more table should be added for the product 
+# eg maize that will the be connected to the category and the product to the product type table
+class ProductNameModel(models.Model):
+    productName = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.productName
+
 # quantity should have choices like 5 and 10 
 #  packacking quantity should also have choices like litrs,kgs,mg
 class ProductModel(models.Model):
-    productName = models.CharField(max_length=255)
+    productName = models.ManyToManyField(ProductNameModel)
     productCategory = models.ForeignKey(ProductCategoryModel,on_delete=models.CASCADE,)
     manufacturer = models.ManyToManyField(ManufactureRegisterModel)
     price = models.FloatField(max_length=7)
@@ -32,5 +41,3 @@ class ProductModel(models.Model):
     def __str__(self):
       return self.productName
 
-# one more table should be added for the product 
-# eg maize that will the be connected to the category and the product to the product type table
