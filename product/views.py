@@ -4,7 +4,7 @@ from rest_framework import permissions, status
 from django.contrib.auth import get_user_model 
 User = get_user_model()
 from manufacturer.models import ManufactureRegisterModel
-from .models import ProductModel
+from .models import ProductModel,ProductCategoryModel,ProductNameModel
 from .serializer import ProductModelSerializer
 
 # Create your views here.
@@ -54,11 +54,11 @@ class RetrieveProductFarmer(APIView):
         try:
             user = User.request
         
-            if user.is_farmer ==True:
+            if user.is_farmer == True:
                 products =ProductModel.objects.get()
                 product_serialized =ProductModelSerializer(products,many=True)
                 return Response(
-                        {'ManufacturerProducts':product_serialized.data},
+                        {'Products':product_serialized.data},
                     status= status.HTTP_200_OK
                     )
         

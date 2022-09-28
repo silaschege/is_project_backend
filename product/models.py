@@ -39,5 +39,5 @@ class ProductModel(models.Model):
     # merchant foreign key needs to be added
 
     def __str__(self):
-      return self.productName
+      return str(self.productName)
 
