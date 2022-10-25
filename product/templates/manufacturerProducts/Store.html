@@ -1,0 +1,38 @@
+{% extends 'manufacturerProducts/manufacturerBase.html' %}
+
+{%block content%}
+
+<div class = 'p-3'>
+<h2 class='d-flex justify-content-center'>Store</h2>
+<table class="table table table-striped table table-hover table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Remaining Pieces</th>
+        <th scope="col">Price</th>
+        <th scope="col">Packaging Quantity</th>
+  
+        
+      </tr>
+    </thead>
+    <tbody>
+{% for store in storeProducts %}
+
+
+
+
+      <tr>
+        <th><a href="{% url 'ManufacturerSelectUpdate' store.id %}">{{store.productName}}</a></th>
+        <td>{{store.productPieces}}</td>
+        <td>{{store.productPrice}}</td>
+        <td>{{store.packagingQuantity}}{{store.packagingMetric}}</td>
+  
+      </tr>
+     
+
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+{%endblock%}

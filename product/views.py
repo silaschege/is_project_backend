@@ -1,173 +1,155 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import permissions, status
+from pickle import NONE
+from django.contrib import messages
 from django.contrib.auth import get_user_model 
 User = get_user_model()
 from manufacturer.models import ManufactureRegisterModel
-from .models import ProductModel,ProductCategoryModel,ProductNameModel
-from .serializer import ProductModelSerializer
+from .models import ProductCategoryModel,ProductsModel
+
+from django.shortcuts import render, redirect
+from .forms import (ManufacturerAddProductForm,AdminAddCategoryForm,AdminAddProductPackagingMetric,AdminAddProductPackagingQuantity)
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 
-# get a the foreign key id and then connect them for manufacturer because there is a ratio of many is to
-# get foreign key but the manufacturer has one foreign key for admin purposes but thereis a sub table for the relationships this is a future plan
-
-
-# add a product
-# update a product dlete a product
-# when a customer makes an installment the product quantity is reduce and when the installment is not complete there is a role back to the products table
-
-
-# add product and shuld be manufacturer
-class RetrieveProductsManufacturer(APIView):
-    def get(self,request,format=None):
-        try:
-            user = request.User
-            if user.is_manufacture==True:
-                manufacturer_filter = ManufactureRegisterModel.objects.filter(user = user)
-                
-                products =ProductModel.objects.get(
-                    manufacturer = manufacturer_filter
-                )
-
-                product_serialized =ProductModelSerializer(products,many=True)
-
-                return Response(
-                    {'ManufacturerProducts':product_serialized.data},
-                    status= status.HTTP_200_OK
-                )
-            
-            else:
-                return  Response(
-                            {'Error':'You do not have the permision to make any changes'},
-                            status= status.HTTP_400_BAD_REQUEST
-                )
-        except:
-            return Response(
-                {'Error':'Something went wrong when retreiving products'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR    
-            )
-
-class RetrieveProductFarmer(APIView):
-    def get(self,request,format=None):
-        try:
-            user = User.request
-        
-            if user.is_farmer == True:
-                products =ProductModel.objects.get()
-                product_serialized =ProductModelSerializer(products,many=True)
-                return Response(
-                        {'Products':product_serialized.data},
-                    status= status.HTTP_200_OK
-                    )
-        
-            else:
-                return Response(
-                    {'Error':'You do not have permisssion to view this'},
-                    status= status.HTTP_400_BAD_REQUEST
-                )
-        except:
-            return Response(
-                    {'Error':'Something went wrong when retreiving products'},
-                    status= status.HTTP_500_INTERNAL_SERVER_ERROR    
-                )
-
-class AddNewProductManufacturer(APIView):
-    def post (self,request):
-        try:
-            user = request.User
-            data =request.data
-
-            productName = data['productName ']
-            productCategory = data['productCategory']
-            price = data['price']
-            quantity = data['quantity']
-            packagingQuantity = data['packagingQuantity']
-            product_image = data['product_image']
-
-            if ManufactureRegisterModel.objects.filter(user = user).exists():
-                if user.is_manufacture==True:
-                    manufacturer_filter = ManufactureRegisterModel.objects.filter(user = user)
-                    
-                    ProductModel.objects.create(          
-                        productName = productName,
-                        productCategory = productCategory,
-                        manufacturer = manufacturer_filter,
-                        price = price,
-                        quantity = quantity,
-                        packagingQuantity = packagingQuantity,
-                        product_image = product_image,
-                    )
-
-                    return Response(
-                        {'Success':'Product added succesfully'},
-                        status= status.HTTP_201
-                    )
-
-                else:
-                    return  Response(
-                            {'Error':'You do not have the permision to make any changes'},
-                            status= status.HTTP_400_BAD_REQUEST
-                        )
-            
-            else:
-                 return  Response(
-                            {'Error':'Manufacturer does not exist'},
-                            status= status.HTTP_400_BAD_REQUEST
-                        )
-        except:
-            return Response(
-                {'Error':'Something went wrong when adding products'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-                
-            )
-
-
-
-
-
-# delete product and should be a manufaturer
-class DeleteProduct(APIView):
-    def delete (self,request):
-        user = User.request
-        data = request.data
-        id = data['id']
-        try:
-            if user.is_manufacture==True:
-
-                if not ProductModel.objects.filter(id=id).exists():
-                    return Response (
-                        {'Error':'Product does not exist'},
-                        status= status.HTTP_404_NOT_FOUND
-                    )
-                
-                ProductModel.objects.filter(id=id).delete()
-
-                if not ProductModel.objects.filter(id=id).exists():
-                    return Response(
-                        {'Success':'Product deleted successfully'},
-                        status= status.HTTP_204_NO_CONTENT
-                    )
-
-                else:
-                    return Response (
-                        {'Error':'Failed to delete product'},
-                        status= status.HTTP_400_BAD_REQUEST
-                    )
-
-            
-            else:
-                return Response(
-                {'Error':'You do not have permisssion to conduct the operation being attempted'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-        except:
-            return Response(
-                {'Error':'Something went wrong when deleting products'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
                
+def FarmerInstallmentsListView (request):
+    return render(request,'Farmerproducts/FarmerInstallmentList.html',{})
+
+
+
+def FarmerAddPlantsList(request,category_id):
+    # this is all the plants that are in the system
+    addPlantsList = ProductsModel.objects.filter(productCategory=category_id)
+    return render(request,'Farmerproducts/FarmerAddPlantsList.html',{
+        'addPlantsList': addPlantsList,
+    })
+
+def FarmerAddPlantsCategoryList(request):
+    # this is all the plants that are in the system
+    addPlantCategoryList = ProductCategoryModel.objects.all()
+    return render(request,'Farmerproducts/FarmerAddPlantCategoryList.html',{
+        
+        'addPlantCategoryList': addPlantCategoryList,
+    })
+
+###################################################################################################################
+# manufacturer
+
+
+
+def ManufacturerAddProduct(request):
+    # check if form is submitted
+    submitted = False
+    if request.method == "POST":
+        form = ManufacturerAddProductForm(request.POST, request.FILES)
+    
+        if form.is_valid():
+            
+            product = form.save(commit=False)
+            product.productManufacturer = request.user # logged in user
+            product.save()
+            messages.success(request, ("Your product has been added!"))
+            return 	HttpResponseRedirect('ManufacturerAddProduct?submitted=True')	
+            
+    else:
+        # if submitted is not done
+        form = ManufacturerAddProductForm
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'manufacturerProducts/manufacturerAddProducts.html', {'form':form, 'submitted':submitted})
+
+
+def ManufacturerStore(request):
+    manufacturer = request.user 
+    storeProducts=ProductsModel.objects.filter(productManufacturer=manufacturer)
+    return render(request,'manufacturerProducts/Store.html',{
+        'storeProducts':storeProducts
+    }
+
+    )
+
+def ManufacturerUpdateStore(request,product_id):
+    manufacturerUpdate = ProductsModel.objects.filter(id=product_id).first()
+    form = ManufacturerAddProductForm(request.POST,request.FILES,instance=manufacturerUpdate)
+    if form.is_valid():
+            form.save()
+            messages.success(request, (" Your Category has been added succesfully!!!"))
+            return redirect('ManufacturerUpdateStore')	
+
+    return render(request,'manufacturerProducts/manufacturerUpdateStore.html',{
+        'manufacturerUpdate':manufacturerUpdate,
+        'form':form,
+    }
+
+    )
+
+def ManufacturerSelectUpdate(request,product_id):
+    manufacturerUpdate = ProductsModel.objects.filter(id=product_id)
+    return render(request,'manufacturerProducts/ManufacturerSelectUpdate.html',{
+        'manufacturerUpdate':manufacturerUpdate,
+        
+    }
+
+    )
+
+
+###########################################################################################################
+#admin
+def AdminAddCategory (request):
+    submitted = False 
+    if request.method == 'POST':
+        form = AdminAddCategoryForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, (" Your Category has been added succesfully!!!"))
+       
+        return HttpResponseRedirect('AdminAddCategoryU?submitted=True')	
+    else:
+        form = AdminAddCategoryForm
+        if 'submitted' in request.GET:
+            submitted=True
+    return render(request,'admin/addCategory.html',{'form':form,'submitted':submitted})
+
+def AdminAddPackagingMetric(request):
+    submitted = False 
+    if request.method == 'POST':
+        form = AdminAddProductPackagingMetric(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, (" Your Packaging Metric  has been added succesfully!!!"))
+       
+        return HttpResponseRedirect('AdminAddPackagingMetric?submitted=True')	
+    else:
+        form = AdminAddProductPackagingMetric
+        if 'submitted' in request.GET:
+            submitted=True
+    return render(request,'admin/addProductPackagingMetric.html',{'form':form,'submitted':submitted})
+   
+
+def AdminAddPackagingQuantity(request):
+    submitted = False 
+    if request.method == 'POST':
+        form = AdminAddProductPackagingQuantity(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, (" Your  Packaging Quantity has been added succesfully!!!"))
+       
+        return HttpResponseRedirect('AdminAddPackagingQuantity?submitted=True')	
+    else:
+        form = AdminAddProductPackagingQuantity
+        if 'submitted' in request.GET:
+            submitted=True
+    return render(request,'admin/addProductPackagingQuantity.html',{'form':form,'submitted':submitted})
+
+
+
+    
+    
+
+
+
+
 
 
 

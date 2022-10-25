@@ -1,5 +1,5 @@
 from django.db import models
-from product.models import ProductModel
+from product.models import ProductsModel
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -15,7 +15,7 @@ class InstallmentNumberModel(models.Model):
 
 class InstallmentModel(models.Model):
     installmentNumber = models.ManyToManyField(InstallmentNumberModel)
-    product_id = models.ManyToManyField(ProductModel)
+    product_id = models.ManyToManyField(ProductsModel)
     quantity = models.IntegerField()
     # status = models.TextChoices() this should have choices if paid or not paid
 
