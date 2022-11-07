@@ -2,7 +2,8 @@
 
 
 {%block content%}
-<h1>Add plants</h1>
+<h1 class='d-flex justify-content-center'>Add plants</h1>
+
    
 
 
@@ -17,7 +18,8 @@
                       <h5 class="card-title">Name:{{ plants.productName}}</h5>
                       <p class="card-text"> Price:Ksh{{plants.productPrice}} </p>
                       <p class="card-text"> Packaging:{{plants.packagingQuantity}}{{plants.packagingMetric}}</p>
-                      <a href="#" class="btn btn-primary">Add Installment</a>
+                      <p><a href="{% url 'FarmerAddInstallmentHolder'   plants.id%}" class="btn btn-primary" role="button" aria-pressed="true">Add to cart </a></p>
+
                     </div>
                   </div>
            

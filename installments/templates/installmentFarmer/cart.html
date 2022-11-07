@@ -1,0 +1,58 @@
+{% extends 'Farmerproducts/FarmerBase.html' %}
+
+
+{%block content%}
+
+  
+   <div class = 'p-3'>
+      <h2 class='d-flex justify-content-center'>Cart</h2>
+      <div class='d-flex justify-content-center'>
+        <!-- shipping date form -->
+        <form action="" method=POST enctype="multipart/form-data" > {% csrf_token %}
+          <h5 class='d-flex justify-content-center'>Shipping date</h5>
+       
+        
+        {{ form.as_p }}
+       
+        </form>
+
+        <!-- cart items table -->
+        </div> 
+      <table class="table table table-striped table table-hover table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Pieces</th>
+              <th scope="col">Price</th>
+              <th scope="col">Packaging Quantity</th>
+        
+              
+            </tr>
+          </thead>
+          <tbody>
+      {% for product in allcartProducts %}
+      
+      
+      
+      
+            <tr>
+              <th><a href="">{{product.productName}}</a></th>
+              <td>{{product.productPieces}}</td>
+              <td>{{product.productPrice}}</td>
+              <td>{{product.packagingQuantity}}{{product.packagingMetric}}</td>
+              <td><a href="{% url 'farmerCartRemove' product.id %}" type="button" class="btn btn-outline-danger">Remove</a></td>
+        
+            </tr>
+           
+      
+      
+      {% endfor %}
+      </tbody>
+      </table>
+      <h2 class='d-flex justify-content-center'>Total:{{alltotals}}ksh</h2>
+      <p class='d-flex justify-content-end'><a href="{%url 'createInstallmentHolder' alltotals %} " type="button" class="btn btn-outline-success ">Checkout To Installments</a></p>
+      </div>
+      
+ 
+
+{%endblock%}

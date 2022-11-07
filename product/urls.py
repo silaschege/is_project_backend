@@ -7,6 +7,8 @@ ManufacturerStore,
 ManufacturerAddProduct,
 ManufacturerUpdateStore,
 ManufacturerSelectUpdate,
+ManufacturerAddProductNameView,
+ManufacturerLoadProductsName,
 AdminAddCategory,
 AdminAddPackagingMetric,
 AdminAddPackagingQuantity
@@ -20,8 +22,10 @@ urlpatterns = [
 
     path('ManufacturerStore',ManufacturerStore,name='ManufacturerStore'),
     path('ManufacturerAddProduct',ManufacturerAddProduct,name='ManufacturerAddProduct'),
+    path('ManufacturerAddProductName',ManufacturerAddProductNameView,name='ManufacturerAddProductName'),
     path('ManufacturerSelectUpdate/<product_id>',ManufacturerSelectUpdate,name='ManufacturerSelectUpdate'),
     path('ManufacturerUpdateStore/<product_id>',ManufacturerUpdateStore,name='ManufacturerUpdateStore'),
+    path('ManufacturerLoadProductsName',ManufacturerLoadProductsName,name='ManufacturerLoadProductsName'),
    
 
     path('AdminAddCategoryU',AdminAddCategory,name='AdminAddCategoryU'),

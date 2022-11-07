@@ -6,20 +6,27 @@
 {% if submitted %}
 		{{message}}
        <div class='d-flex justify-content-center'>
-        <form action="" method=POST enctype="multipart/form-data" >
-            <h2>Add Store</h2>
+        <form action="" method=POST id='ManufacturerAddProductForm' enctype="multipart/form-data" data-productName-url="{% url 'ManufacturerLoadProductsName' %}">
+            <h2>Add To Your Store</h2>
 			{% csrf_token %}
 
-			{{ form.as_p }}
+			<table>
+				{{ form.as_table }}
+			  </table>
 
 			<input type="submit" value="Submit" class="btn btn-secondary">
 
 		</form>
+
+
+
     </div>
+
+
 	{% else %}
-        <div class='d-flex justify-content-center'>
-		<form action="" method=POST  enctype="multipart/form-data" class='justify-content-center'>
-            <h2>Add Product</h2>
+	<div class='d-flex justify-content-center'>
+        <form action="" method=POST id='ManufacturerAddProductForm' enctype="multipart/form-data" data-productName-url="{% url 'ManufacturerLoadProductsName' %}" novalidate>
+            <h2>Add To Your Store</h2>
 			{% csrf_token %}
 
 			{{ form.as_p }}
@@ -27,6 +34,28 @@
 			<input type="submit" value="Submit" class="btn btn-secondary">
 
 		</form>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script>
+		  $("#id_productCategory").change(function () {
+			var url = $("#ManufacturerAddProductForm").attr("data-productName-url");  // get the url of the `load_cities` view
+			var productCategoryId = $(this).val();  // get the selected productCategory ID from the HTML input
+	  
+			$.ajax({                       // initialize an AJAX request
+			  url: url,                    // set the url of the request (= localhost:8000/ManufacturerLoadProductsName/)
+			  data: {
+				'productCategory': productCategoryId       // add the productCategory id to the GET parameters
+			  },
+			  success: function (data) {   // `data` is the return of the `load_cities` view function
+				$("#id_productName").html(data);  // replace the contents of the city input with the data that came from the server
+			  }
+			});
+	  
+		  });
+		</script>
+
+
+
     </div>
 		{% endif %}
 

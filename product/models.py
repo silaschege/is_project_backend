@@ -17,7 +17,9 @@ class ProductCategoryModel(models.Model):
 # one more table should be added for the product 
 # eg maize that will the be connected to the category and the product to the product type table
 class ProductNameModel(models.Model):
+    productCategory = models.ForeignKey(ProductCategoryModel,on_delete=models.SET_DEFAULT,default=1)
     productName = models.CharField(max_length=255)
+    
     
     def __str__(self):
         return self.productName
@@ -40,7 +42,7 @@ class PackagingQuantity(models.Model):
 
 class ProductsModel (models.Model):
     productCategory = models.ForeignKey(ProductCategoryModel,on_delete=models.SET_DEFAULT,default=1)
-    productName = models.ForeignKey(ProductNameModel,on_delete=models.SET_DEFAULT,default=1)
+    productName = models.ForeignKey(ProductNameModel,on_delete=models.SET_NULL, null=True)
     productManufacturer = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
     productPrice = models.IntegerField()
     productPieces = models.IntegerField()

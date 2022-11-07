@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Seed</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <img src="/media//productCategory_images/logo-removed.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,24 +14,20 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'ManufacturerStore' %}">All Store</a>
             <a class="dropdown-item" href="{% url 'ManufacturerAddProduct' %}">Add Store</a>
-  
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ManufacturerAddProductName' %}">Add New Product</a>
+            </li>
+        
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
+          <a class="nav-link" href="#">All payments</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"> payments history</a>
+        </li>
+
       </ul>
       
-      <a href="{% url 'Userlogout' %}" class="btn btn-success" role="button" aria-pressed="true">Logout</a>
+      <a href="{% url 'Userlogout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true">Logout</a>
     </div>
   </nav>

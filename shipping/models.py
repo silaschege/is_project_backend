@@ -1,5 +1,5 @@
 from django.db import models
-from installments.models import InstallmentModel
+from installments.models import InstallmentNumberModel
 from django.utils.timezone import now
 
 # Create your models here.
@@ -14,7 +14,7 @@ class ShippingRegister(models.Model):
         (INTRANSIT,'INTRANSIT'),
         (RECEIVED,'RECEIVED'),
     ]
-    installment = models.ManyToManyField(InstallmentModel)
+    installment = models.ManyToManyField(InstallmentNumberModel)
     Shipping_status  = models.CharField(
         max_length=5,
         choices=status_choices,

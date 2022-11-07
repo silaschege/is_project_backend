@@ -1,10 +1,6 @@
-from tkinter import Widget
-from pyexpat import model
-from dataclasses import fields
-from random import choices
 from django import forms
 from django.forms import ModelForm
-from .models import ProductsModel,ProductCategoryModel,PackagingMetric,PackagingQuantity
+from .models import ProductsModel,ProductCategoryModel,PackagingMetric,PackagingQuantity,ProductNameModel
 
 ##############################################################################################################################
 class  ManufacturerAddProductForm(ModelForm):
@@ -13,7 +9,24 @@ class  ManufacturerAddProductForm(ModelForm):
         fields = ('productCategory','productName','productPrice','productPieces','productImage','packagingMetric','packagingQuantity')
         # fields = ('__all__')
 
-        labels={
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['productName'].queryset = ProductNameModel.objects.none()
+    
+        if 'productCategory' in self.data:
+            try:
+                productCategory_id = int(self.data.get('productCategory'))
+                self.fields['productName'].queryset = ProductNameModel.objects.filter(productCategory_id=productCategory_id).order_by('name')
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty productName queryset
+    # elif self.instance.pk:
+    #         self.fields['productName'].queryset = self.instance.productCategory.productName_set.order_by('name')
+
+
+
+    labels={
             'productCategory':'Product Category',
             'productName':'Product Name',
             'productPrice':'Product Price',
@@ -23,7 +36,7 @@ class  ManufacturerAddProductForm(ModelForm):
             'packagingQuantity':'Packaging Quantity',
         }
 
-        widgets ={
+    widgets ={
             'productCategory':forms.Select(attrs={'class':'form-select', 'placeholder':'Product Category'}) ,
             'productName':forms.Select(attrs={'class':'form-select', 'placeholder':'Product Name'}),
             'productPrice': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Price'}),
@@ -32,6 +45,11 @@ class  ManufacturerAddProductForm(ModelForm):
             'packagingQuantity':forms.Select(attrs={'class':'form-select', 'placeholder':'Packaging Quantity'}),
 
         }
+    
+class ManufacturerAddProductName(ModelForm):
+    class Meta:
+        model = ProductNameModel
+        fields = ('productName','productCategory')
 #########################################################################################################################
 class AdminAddCategoryForm(ModelForm):
     class Meta:

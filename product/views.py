@@ -3,10 +3,14 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model 
 User = get_user_model()
 from manufacturer.models import ManufactureRegisterModel
-from .models import ProductCategoryModel,ProductsModel
+from .models import ProductCategoryModel, ProductNameModel,ProductsModel
 
 from django.shortcuts import render, redirect
-from .forms import (ManufacturerAddProductForm,AdminAddCategoryForm,AdminAddProductPackagingMetric,AdminAddProductPackagingQuantity)
+from .forms import (ManufacturerAddProductForm,
+ManufacturerAddProductName,
+AdminAddCategoryForm,
+AdminAddProductPackagingMetric
+,AdminAddProductPackagingQuantity)
 from django.http import HttpResponseRedirect
 
 # Create your views here.
@@ -59,6 +63,10 @@ def ManufacturerAddProduct(request):
             submitted = True
     return render(request, 'manufacturerProducts/manufacturerAddProducts.html', {'form':form, 'submitted':submitted})
 
+def ManufacturerLoadProductsName(request):
+    product_category_id = request.GET.get('productCategory')
+    product_name = ProductNameModel.objects.filter(productCategory=product_category_id).order_by('productName')
+    return render(request, 'manufacturerProducts/manufacturerLoadProductDropDown.html', {'product_name':product_name})
 
 def ManufacturerStore(request):
     manufacturer = request.user 
@@ -70,15 +78,15 @@ def ManufacturerStore(request):
     )
 
 def ManufacturerUpdateStore(request,product_id):
-    manufacturerUpdate = ProductsModel.objects.filter(id=product_id).first()
+    manufacturerUpdate = ProductsModel.objects.get(id=product_id)
     form = ManufacturerAddProductForm(request.POST,request.FILES,instance=manufacturerUpdate)
     if form.is_valid():
             form.save()
-            messages.success(request, (" Your Category has been added succesfully!!!"))
-            return redirect('ManufacturerUpdateStore')	
+            messages.success(request, (" Your store item has been updated succesfully!!!"))
+            return redirect('ManufacturerSelectUpdate',product_id=product_id)	
 
     return render(request,'manufacturerProducts/manufacturerUpdateStore.html',{
-        'manufacturerUpdate':manufacturerUpdate,
+       
         'form':form,
     }
 
@@ -92,6 +100,28 @@ def ManufacturerSelectUpdate(request,product_id):
     }
 
     )
+
+def ManufacturerAddProductNameView(request):
+        # check if form is submitted
+    submitted = False
+    if request.method == "POST":
+        form = ManufacturerAddProductName(request.POST, request.FILES)
+    
+        if form.is_valid():
+            
+            product = form.save(commit=False)
+            product.productManufacturer = request.user # logged in user
+            product.save()
+            messages.success(request, ("Your product name has been added!"))
+            return 	HttpResponseRedirect('ManufacturerAddProductName?submitted=True')	
+            
+    else:
+        # if submitted is not done
+        form = ManufacturerAddProductName
+        if 'submitted' in request.GET:
+            submitted = True
+    return render(request, 'manufacturerProducts/manufacturerAddProductName.html', {'form':form, 'submitted':submitted})
+
 
 
 ###########################################################################################################

@@ -3,9 +3,18 @@
 {%block content%}
 
 
-<h2 class='d-flex justify-content-center'>Update Store</h2>
 
-   
+<div class='d-flex justify-content-center'>
+<form action="" method=POST enctype="multipart/form-data" >
+  <h2>Update Item Store</h2>
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<input type="submit" value="Submit" class="btn btn-secondary">
+
+</form>
+</div> 
 
   
   </div>

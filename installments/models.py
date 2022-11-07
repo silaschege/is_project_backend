@@ -13,10 +13,15 @@ class InstallmentNumberModel(models.Model):
     total_amount = models.IntegerField()
     user_id = models.ManyToManyField(User)
 
+
 class InstallmentModel(models.Model):
-    installmentNumber = models.ManyToManyField(InstallmentNumberModel)
-    product_id = models.ManyToManyField(ProductsModel)
+    installmentNumber = models.ForeignKey(InstallmentNumberModel,on_delete=models.SET_DEFAULT,default=1)
+    product_id = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)
     quantity = models.IntegerField()
+
     # status = models.TextChoices() this should have choices if paid or not paid
 
+class Cart(models.Model):
+    product_id = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)
+    user = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
 
