@@ -49,7 +49,7 @@ def ManufacturerAddProduct(request):
         form = ManufacturerAddProductForm(request.POST, request.FILES)
     
         if form.is_valid():
-            
+             
             product = form.save(commit=False)
             product.productManufacturer = request.user # logged in user
             product.save()

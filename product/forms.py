@@ -7,7 +7,7 @@ class  ManufacturerAddProductForm(ModelForm):
     class Meta:
         model = ProductsModel
         fields = ('productCategory','productName','productPrice','productPieces','productImage','packagingMetric','packagingQuantity')
-        # fields = ('__all__')
+
 
 
 
