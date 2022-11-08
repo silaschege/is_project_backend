@@ -11,7 +11,7 @@ class InstallmentNumberModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     shipping_date = models.DateField()
     total_amount = models.IntegerField()
-    user_id = models.ManyToManyField(User)
+    user_id = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
 
 
 class InstallmentModel(models.Model):

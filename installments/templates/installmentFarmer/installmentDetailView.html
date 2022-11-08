@@ -1,0 +1,50 @@
+{% extends 'Farmerproducts/FarmerBase.html' %}
+
+
+{%block content%}
+
+  
+   <div class = 'p-3'>
+      <h2 class='d-flex justify-content-center'>Cart</h2>
+
+  
+
+
+
+        <!-- cart items table -->
+        </div> 
+      <table class="table table table-striped table table-hover table table-sm">
+          <thead>
+            <tr>
+              
+              <th scope="col">product_id</th>
+              <th scope="col">quantity</th>
+
+              
+            </tr>
+          </thead>
+          <tbody>
+      {% for i in installments %}
+      
+      
+      
+      
+            <tr>
+
+              <td>{{i.product_id}}</td>
+              <td>{{i.quantity}}</td>
+             
+              <td><a href="{% url 'farmerCartRemove' i.id %}" type="button" class="btn btn-outline-danger">Remove</a></td>
+        
+            </tr>
+           
+      
+      
+      {% endfor %}
+      </tbody>
+      </table>
+      </div>
+      
+ 
+
+{%endblock%}

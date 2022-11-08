@@ -1,6 +1,7 @@
 from pickle import NONE
 from django.contrib import messages
 from django.contrib.auth import get_user_model 
+from installments.models import InstallmentModel,InstallmentNumberModel
 User = get_user_model()
 from manufacturer.models import ManufactureRegisterModel
 from .models import ProductCategoryModel, ProductNameModel,ProductsModel
@@ -18,7 +19,11 @@ from django.http import HttpResponseRedirect
 
                
 def FarmerInstallmentsListView (request):
-    return render(request,'Farmerproducts/FarmerInstallmentList.html',{})
+    user = request.user 
+    installmentNumber = InstallmentNumberModel.objects.filter(user_id=user)
+    return render(request,'Farmerproducts/FarmerInstallmentList.html',{
+        'installmentNumber':installmentNumber
+    })
 
 
 

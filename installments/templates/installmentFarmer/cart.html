@@ -15,7 +15,7 @@
       </p>
       <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Shipping date</h5>
@@ -24,18 +24,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" method=POST enctype="multipart/form-data" > {% csrf_token %}
+        <form action="{% url 'farmerCreateInstallmentNumber' alltotals  %}" method=POST enctype="multipart/form-data" > 
+          {% csrf_token %}
           <h5 class='d-flex justify-content-center'>Insert Shipping date</h5>
        
         
         {{ form.as_p }}
-       
+        <input type="submit" value="Submit" class="btn btn-btn-outline-success" href="{% url 'farmerCreateInstallmentNumber' alltotals  %}" >
+
         </form>
       </div>
-      <div class="modal-footer">
-      
-        <a href="{% url 'farmerCreateInstallmentNumber' alltotals  %}" ><button type="button" class="btn btn-outline-success">Save changes</button></a>
-      </div>
+
     </div>
   </div>
 </div>
@@ -75,7 +74,7 @@
       </tbody>
       </table>
       <h2 class='d-flex justify-content-center'>Total:{{alltotals}}ksh</h2>
-      <p class='d-flex justify-content-end'><a href=" " type="button" class="btn btn-outline-success ">Checkout To Installments</a>
+      <p class='d-flex justify-content-end'><a href="{% url 'FarmerCreateInstallment' %}" type="button" class="btn btn-outline-success ">Checkout To Installments</a>
       </div>
       
  

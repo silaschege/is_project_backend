@@ -38,7 +38,6 @@ installmentHolderList = []
 def FarmerAddInstallmentHolder(request,product_id):
     installmentHolderList.append(product_id)
     product= ProductsModel.objects.get(pk=product_id)
-    print('Cart List:',installmentHolderList)
     Cart.objects.create(product_id=product,user=request.user)
     messages.info(request, ('Item added to cart '))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -64,42 +63,53 @@ def farmerCart(request):
 #    calculate totals
     alltotals= sum(total)
     
-    print(allcartProducts)
+   
     return render(request,'installmentFarmer/cart.html',{'allcartProducts':allcartProducts,'alltotals':alltotals,'form':form})
 
 
 def farmerCartRemove(request,product_id):
     cart=Cart.objects.filter(product_id=product_id).filter(user=request.user)
-    print(cart)
     cart.delete()
     messages.info(request, ('Item removed from cart '))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # add Installment
 def farmerCreateInstallmentNumber(request,alltotals):
-    form = FarmerShippingDateForm(request.POST,request.FILES)
     user=request.user
-    if form.is_valid():
+    if request.method == "POST":
+        form = FarmerShippingDateForm(request.POST,request.FILES)
+        if form.is_valid():
             installment = form.save(commit=False)
             installment.user_id=user
             installment.total_amount= alltotals
+            print(installment)
             installment.save()
-  
-    messages.info(request, ('Shipping date added'))
+            messages.info(request, ('Shipping date added succesfully'))
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def FarmerCreateInstallment(request):
     user=request.user
     InstallmentNumber = InstallmentNumberModel.objects.filter(user_id=user).order_by('created_at').last()
-    cart=Cart.objects.filter(user=user)
-
-    products = ProductsModel.objects.filter(id=cart)
- 
-
-    # create installment model
-    InstallmentModel.objects.create(installmentNumber=InstallmentNumber,product_id=products,quantity=1)
+    print('Installment number:',InstallmentNumber)
+    cart=Cart.objects.filter(user=user).values('product_id')
+    print('cart:',cart)
+    for p in cart:
+        products = ProductsModel.objects.get(id=p['product_id'])
+        InstallmentModel.objects.create(installmentNumber=InstallmentNumber,product_id=products,quantity=1)
+        print('products:',products)
+    
     messages.info(request, ('Installment Created '))
     return  render(request,'Farmerproducts/FarmerInstallmentList.html',{})
+
+def FarmerInstallmentDetailView(request,id):
+    installmentNO = InstallmentNumberModel.objects.filter(id=id)
+    print(installmentNO)
+    installments = InstallmentModel.objects.filter(installmentNumber=installmentNO)
+  
+    print(installments)
+    return  render(request,'installmentFarmer/installmentDetailView.html',{'installments':installments})
     
 
 
