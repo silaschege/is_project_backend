@@ -14,14 +14,24 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{% url 'ManufacturerStore' %}">All Store</a>
             <a class="dropdown-item" href="{% url 'ManufacturerAddProduct' %}">Add Store</a>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'ManufacturerAddProductName' %}">Add New Product</a>
-            </li>
+
         
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Installments
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'ManufacturerAllInstallment' %}">Installments</a>
+            <a class="dropdown-item" href="{% url 'ManufacturerAllInstallmentReport' %}">Reports</a>
+
+        
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#">All payments</a>
         </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#"> payments history</a>
         </li>

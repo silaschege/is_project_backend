@@ -51,6 +51,7 @@ class ProductsModel (models.Model):
     packagingQuantity = models.ForeignKey(PackagingQuantity,on_delete=models.SET_NULL,null=True)
     created_at = models.DateTimeField(default=now)
 
-
+    def __str__(self):
+        return str(self.productName)
    
 

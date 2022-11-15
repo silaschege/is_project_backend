@@ -38,6 +38,7 @@ installmentHolderList = []
 def FarmerAddInstallmentHolder(request,product_id):
     installmentHolderList.append(product_id)
     product= ProductsModel.objects.get(pk=product_id)
+    # Cart.objects.filter(product_id=product).count
     Cart.objects.create(product_id=product,user=request.user)
     messages.info(request, ('Item added to cart '))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -95,23 +96,44 @@ def FarmerCreateInstallment(request):
     print('Installment number:',InstallmentNumber)
     cart=Cart.objects.filter(user=user).values('product_id')
     print('cart:',cart)
+
     for p in cart:
         products = ProductsModel.objects.get(id=p['product_id'])
-        InstallmentModel.objects.create(installmentNumber=InstallmentNumber,product_id=products,quantity=1)
+        quantity = Cart.objects.filter(user=user).filter(product_id=products).count()
+        InstallmentModel.objects.create(installmentNumber=InstallmentNumber,productId=products,quantity=quantity)
         print('products:',products)
+ 
     
     messages.info(request, ('Installment Created '))
     return  render(request,'Farmerproducts/FarmerInstallmentList.html',{})
 
 def FarmerInstallmentDetailView(request,id):
-    installmentNO = InstallmentNumberModel.objects.filter(id=id)
-    print(installmentNO)
-    installments = InstallmentModel.objects.filter(installmentNumber=installmentNO)
-  
-    print(installments)
+    installments = InstallmentModel.objects.filter(installmentNumber=id)
     return  render(request,'installmentFarmer/installmentDetailView.html',{'installments':installments})
-    
 
+def ManufacturerAllInstallment(request):
+    user = request.user
+    products=ProductsModel.objects.filter(productManufacturer=user).values('id')
+
+    # Installments= InstallmentModel.objects.filter(productId__productManufacturer__icontains=user)
+    Installments= InstallmentModel.objects.filter(productId__in=products)
+    # Installments=[]
+    # for p in products:
+    #     item= InstallmentModel.objects.get(product_id=p['id'])
+    #     print(item)
+    #     Installments.append(item)
+ 
+    
+    
+    return  render(request,'installmentManufacturer/all_installments.html',{'Installments':Installments})
+
+def ManufacturerAllInstallmentReport (request):
+    user = request.user
+    products=ProductsModel.objects.filter(productManufacturer=user).values('id')
+    Installments= InstallmentModel.objects.filter(productId__in=products)
+    
+    
+    return render(request,'installmentManufacturer/manufaturerInstallmentsReport.html',{'Installments':Installments})
 
     
 # filter using the primary key saved in the add installmentholder model

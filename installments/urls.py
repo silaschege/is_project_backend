@@ -4,7 +4,9 @@ farmerCart,
 farmerCartRemove,
 farmerCreateInstallmentNumber,
 FarmerCreateInstallment,
-FarmerInstallmentDetailView
+FarmerInstallmentDetailView,
+ManufacturerAllInstallment,
+ManufacturerAllInstallmentReport 
 )
 urlpatterns = [
     path('FarmerAddInstallmentHolder/<product_id>',FarmerAddInstallmentHolder,name='FarmerAddInstallmentHolder'),
@@ -13,5 +15,7 @@ urlpatterns = [
     path('farmerCreateInstallmentNumber/<alltotals>',farmerCreateInstallmentNumber,name='farmerCreateInstallmentNumber'),
     path('FarmerCreateInstallment',FarmerCreateInstallment,name='FarmerCreateInstallment'),
     path('FarmerInstallmentDetailView/<id>',FarmerInstallmentDetailView,name='FarmerInstallmentDetailView'),
-    
+#######################################################################################################################
+    path('ManufacturerAllInstallment',ManufacturerAllInstallment,name='ManufacturerAllInstallment'),
+    path('ManufacturerAllInstallmentReport',ManufacturerAllInstallmentReport,name='ManufacturerAllInstallmentReport'),
 ]
