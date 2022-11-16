@@ -1,7 +1,8 @@
 from django.db.models import Q
 
-from django.shortcuts import render, redirect
-from rest_framework.views import APIView
+from django.shortcuts import render
+from finance.forms import FarmerMakePaymentForm
+
 from .models import InstallmentNumberModel,InstallmentModel,Cart
 from product.models import ProductsModel
 from .forms import FarmerShippingDateForm
@@ -13,6 +14,7 @@ from rest_framework import status
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -38,9 +40,17 @@ installmentHolderList = []
 def FarmerAddInstallmentHolder(request,product_id):
     installmentHolderList.append(product_id)
     product= ProductsModel.objects.get(pk=product_id)
-    # Cart.objects.filter(product_id=product).count
-    Cart.objects.create(product_id=product,user=request.user)
-    messages.info(request, ('Item added to cart '))
+    check=Cart.objects.filter(product_id=product).count()
+    if check >=1:
+        quantity_updated_filter=Cart.objects.filter(product_id=product).filter(user=request.user).first()
+        quantity_updated =  quantity_updated_filter.quantity+1
+        print(quantity_updated)
+        Cart.objects.filter(product_id=product).filter(user=request.user).update(quantity=quantity_updated)
+        messages.info(request, ('Item added to cart '))
+    elif check<1:
+        Cart.objects.create(product_id=product,user=request.user,quantity=1)
+        messages.info(request, ('Item added to cart '))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def farmerCart(request):
@@ -51,25 +61,30 @@ def farmerCart(request):
         if form.is_valid():
             form.save
 
-    product = Cart.objects.filter(user=request.user).values('product_id')
+    product = Cart.objects.filter(user=request.user)
+    product_filter = Cart.objects.filter(user=request.user).values('product_id')
     allcartProducts = []
+    allcartItemQuantity = []
  
     total=[]
-    for p in product:
+    for p in product_filter:
         item=ProductsModel.objects.get(pk=p['product_id'])
+        itemcount = Cart.objects.filter(product_id=p['product_id']).filter(user=request.user)
         total.append(item.productPrice)
         allcartProducts.append(item)
-    allcartProducts  
+        allcartItemQuantity.append(itemcount)
+    allcartProducts 
+   
   
 #    calculate totals
     alltotals= sum(total)
     
    
-    return render(request,'installmentFarmer/cart.html',{'allcartProducts':allcartProducts,'alltotals':alltotals,'form':form})
+    return render(request,'installmentFarmer/cart.html',{'alltotals':alltotals,'form':form,'product':product})
 
 
-def farmerCartRemove(request,product_id):
-    cart=Cart.objects.filter(product_id=product_id).filter(user=request.user)
+def FarmerCartRemove(request,id):
+    cart=Cart.objects.filter(product_id=id).filter(user=request.user)
     cart.delete()
     messages.info(request, ('Item removed from cart '))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -99,9 +114,11 @@ def FarmerCreateInstallment(request):
 
     for p in cart:
         products = ProductsModel.objects.get(id=p['product_id'])
-        quantity = Cart.objects.filter(user=user).filter(product_id=products).count()
-        InstallmentModel.objects.create(installmentNumber=InstallmentNumber,productId=products,quantity=quantity)
-        print('products:',products)
+        Pquantity = Cart.objects.filter(user=user).filter(product_id=products).values('quantity')
+        print(Pquantity)
+        for q in Pquantity:
+            InstallmentModel.objects.create(installmentNumber=InstallmentNumber,productId=products,quantity=q['quantity'])
+            print('products:',products)
  
     
     messages.info(request, ('Installment Created '))
@@ -109,6 +126,7 @@ def FarmerCreateInstallment(request):
 
 def FarmerInstallmentDetailView(request,id):
     installments = InstallmentModel.objects.filter(installmentNumber=id)
+
     return  render(request,'installmentFarmer/installmentDetailView.html',{'installments':installments})
 
 def ManufacturerAllInstallment(request):
@@ -129,8 +147,14 @@ def ManufacturerAllInstallment(request):
 
 def ManufacturerAllInstallmentReport (request):
     user = request.user
-    products=ProductsModel.objects.filter(productManufacturer=user).values('id')
+    products=ProductsModel.objects.filter(productManufacturer=user).values('id').order_by('id').distinct()
     Installments= InstallmentModel.objects.filter(productId__in=products)
+    
+ 
+    print(Installments)
+            
+
+    
     
     
     return render(request,'installmentManufacturer/manufaturerInstallmentsReport.html',{'Installments':Installments})

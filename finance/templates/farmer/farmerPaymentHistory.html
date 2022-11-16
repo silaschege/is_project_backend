@@ -11,25 +11,25 @@
     <thead>
       <tr>
         <th scope="col">No</th>
-        <th scope="col">Shipping Date</th>
-        <th scope="col">Total Amount</th>
+        <th scope="col">Installment Number</th>
+        <th scope="col">Amount</th>
         <th scope="col"> </th>
       
 
       </tr>
     </thead>
     <tbody>
-{% for installment in installmentNumber %}
+{% for pay in payment %}
 
 
 
 
       <tr>
-        <th><a href="{% url 'FarmerInstallmentDetailView' installment.id %}">{{installment.pk}}</a></th>
-        <td>{{installment.shipping_date}}</td>
-        <td>{{installment.total_amount}}</td>
+        <td>{{pay.pk}}</td>
+        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}"></a>{{pay.installment_id}}</a></td>
+        <td>{{pay.amount}}</td>
         
-        <td><a href="{% url 'farmerMakePayment' installment.id  %} " type="button" class="btn btn-outline-success" >Pay</a></td>
+        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}" type="button" class="btn btn-outline-success" >Show Items</a></td>
      
         
    

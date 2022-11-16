@@ -27,4 +27,5 @@ class InstallmentModel(models.Model):
 class Cart(models.Model):
     product_id = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)
     user = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
+    quantity = models.IntegerField()
 

@@ -52,6 +52,6 @@ class ProductsModel (models.Model):
     created_at = models.DateTimeField(default=now)
 
     def __str__(self):
-        return str(self.productName)
+        return  self.productName.productName
    
 

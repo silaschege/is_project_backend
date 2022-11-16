@@ -45,32 +45,26 @@
       <table class="table table table-striped table table-hover table table-sm">
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Pieces</th>
-              <th scope="col">Price</th>
-              <th scope="col">Packaging Quantity</th>
+              <th scope="col">Product</th>
+              <th scope="col">Quantity</th>
         
               
             </tr>
           </thead>
           <tbody>
-      {% for product in allcartProducts %}
-      
-      
-      
-      
+      {% for p in product %}
+     
             <tr>
-              <th><a href="">{{product.productName}}</a></th>
-              <td>{{product.productPieces}}</td>
-              <td>{{product.productPrice}}</td>
-              <td>{{product.packagingQuantity}}{{product.packagingMetric}}</td>
-              <td><a href="{% url 'farmerCartRemove' product.id %}" type="button" class="btn btn-outline-danger">Remove</a></td>
-        
+              <td>{{p.product_id}}</td>
+              <td>{{p.quantity}}</td>
+              
+              <td><a href="{%url  'FarmerCartRemove' p.id%} " type="button" class="btn btn-outline-danger">-</a></td>
+              <td><a type="button" class="btn btn-outline-success ">+</a></td>
             </tr>
-           
-      
-      
+            
+            
       {% endfor %}
+     
       </tbody>
       </table>
       <h2 class='d-flex justify-content-center'>Total:{{alltotals}}ksh</h2>
@@ -78,5 +72,5 @@
       </div>
       
  
-
+{{allcartItemQuantity}}
 {%endblock%}

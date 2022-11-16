@@ -3,7 +3,7 @@
 {%block content%}
 
 
-<p><h2 class='d-flex justify-content-center'/>Installments Reports</h2></p>
+<p><h2 class='d-flex justify-content-center'/>Payment Reports</h2></p>
 <div class='d-flex justify-content-center'>
 
 
@@ -18,10 +18,10 @@
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [{%for ins in Installments%} '{{ins.productId}}', {%endfor%}],
+        labels: [{%for ins in payment%} '{{ins.installment_id}}', {%endfor%}],
         datasets: [{
           label: 'Installment Products',
-          data: [{%for i in Installments%} '{{i.quantity}}', {%endfor%}],
+          data: [{%for i in payment%} '{{i.amount}}', {%endfor%}],
           backgroundColor: [
       'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
