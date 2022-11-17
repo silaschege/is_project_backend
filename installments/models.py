@@ -11,10 +11,11 @@ class InstallmentNumberModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     shipping_date = models.DateField()
     total_amount = models.IntegerField()
+    balance = models.IntegerField()
     user_id = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.shipping_date)
 
 
 class InstallmentModel(models.Model):
@@ -23,6 +24,10 @@ class InstallmentModel(models.Model):
     quantity = models.IntegerField()
 
     # status = models.TextChoices() this should have choices if paid or not paid
+
+class ManufacturerInstallmentRecord(models.Model):
+    productId = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)
+    quantity = models.IntegerField()
 
 class Cart(models.Model):
     product_id = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)

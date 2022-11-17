@@ -1,9 +1,9 @@
-from django.db.models import Q
+
 
 from django.shortcuts import render
 from finance.forms import FarmerMakePaymentForm
 
-from .models import InstallmentNumberModel,InstallmentModel,Cart
+from .models import InstallmentNumberModel,InstallmentModel,Cart,ManufacturerInstallmentRecord
 from product.models import ProductsModel
 from .forms import FarmerShippingDateForm
 from django.contrib.auth import get_user_model
@@ -98,7 +98,8 @@ def farmerCreateInstallmentNumber(request,alltotals):
             installment = form.save(commit=False)
             installment.user_id=user
             installment.total_amount= alltotals
-            print(installment)
+            installment.balance = alltotals
+            
             installment.save()
             messages.info(request, ('Shipping date added succesfully'))
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -108,18 +109,35 @@ def farmerCreateInstallmentNumber(request,alltotals):
 def FarmerCreateInstallment(request):
     user=request.user
     InstallmentNumber = InstallmentNumberModel.objects.filter(user_id=user).order_by('created_at').last()
-    print('Installment number:',InstallmentNumber)
+  
     cart=Cart.objects.filter(user=user).values('product_id')
-    print('cart:',cart)
+    
 
     for p in cart:
         products = ProductsModel.objects.get(id=p['product_id'])
         Pquantity = Cart.objects.filter(user=user).filter(product_id=products).values('quantity')
-        print(Pquantity)
+        
+
+            
+    
+        
         for q in Pquantity:
             InstallmentModel.objects.create(installmentNumber=InstallmentNumber,productId=products,quantity=q['quantity'])
-            print('products:',products)
- 
+            
+            
+            # creating the holder form mufacturer to be able to know products in the sytem under installmnents 
+            check=ManufacturerInstallmentRecord.objects.filter(productId=products).count()
+            if check >=1:
+                quantity_updated_filter=ManufacturerInstallmentRecord.objects.filter(productId=products).first()
+                quantity_updated =  quantity_updated_filter.quantity+q['quantity']
+                print(quantity_updated)
+                ManufacturerInstallmentRecord.objects.filter(productId=products).update(quantity=quantity_updated)
+            
+            elif check<1:
+                ManufacturerInstallmentRecord.objects.create(productId=products,quantity=q['quantity'])
+            
+            
+        Cart.objects.filter(user=user).filter(product_id=products).delete()
     
     messages.info(request, ('Installment Created '))
     return  render(request,'Farmerproducts/FarmerInstallmentList.html',{})
@@ -147,8 +165,7 @@ def ManufacturerAllInstallment(request):
 
 def ManufacturerAllInstallmentReport (request):
     user = request.user
-    products=ProductsModel.objects.filter(productManufacturer=user).values('id').order_by('id').distinct()
-    Installments= InstallmentModel.objects.filter(productId__in=products)
+    Installments= ManufacturerInstallmentRecord.objects.filter(productId__productManufacturer=user)
     
  
     print(Installments)

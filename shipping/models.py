@@ -14,7 +14,7 @@ class ShippingRegister(models.Model):
         (INTRANSIT,'INTRANSIT'),
         (RECEIVED,'RECEIVED'),
     ]
-    installment = models.ManyToManyField(InstallmentNumberModel)
+    installment = models.ForeignKey(InstallmentNumberModel,on_delete=models.SET_DEFAULT,default=1)
     Shipping_status  = models.CharField(
         max_length=5,
         choices=status_choices,

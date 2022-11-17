@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import (MakePayment,
+from .views import (
 farmerMakePayment,
 farmerPaymentHistory,
 ManufacturerPaymentHistory,
@@ -7,7 +7,7 @@ ManufacturerPaymentHistory,
 )
 
 urlpatterns = [
-    path('makePayment',MakePayment.as_view()),
+   
     path('farmerMakePayment/<id>',farmerMakePayment,name='farmerMakePayment'),
     path('farmerPaymentHistory',farmerPaymentHistory,name='farmerPaymentHistory'),
 #######################################################################################################################

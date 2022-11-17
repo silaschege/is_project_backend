@@ -9,6 +9,7 @@ from installments.models import InstallmentModel,InstallmentNumberModel
 from .forms import FarmerMakePaymentForm
 from django.contrib import messages
 from product.models import ProductsModel
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -25,61 +26,6 @@ from product.models import ProductsModel
 
 # the total paid amount and balance  is calculated befor being created
 # check if balance is zero and create the shipping and also if its zero before to deny payment
-class MakePayment(APIView):
-    def post(self,request):
-        try:
-            data = request.data
-            user = request.user
-
-            
-            installment_id = data['installment_id']
-            amount  = data['amount']
-
-            paymentMethod = data['paymentMethod']
-
-            previousPayments = PaymentLogModel.objects.all(installment_id=installment_id)
-            previousPaymentCount = PaymentLogModel.objects.all(installment_id=installment_id)
-            installmentPrice = InstallmentModel.objects.filter(installment_id=installment_id)
-            
-
-            if user.is_famer == True:
-                for x in previousPaymentCount:
-                    totalPaid = totalPaid+previousPayments.amount
-                    return totalPaid
-                
-                totalAmountPaid = totalPaid + amount
-                balance = installmentPrice.total_amount - totalAmountPaid
-
-                PaymentLogModel.objects.create(
-                    user_id = user,
-                    amount =amount,
-                    totalAmountPaid  = totalAmountPaid,
-                    balance = balance,
-                    paymentMethod = paymentMethod
-
-                )
-
-                return Response(
-                    {'Success':'Payment succesfully done'},
-                    status= status.HTTP_201_CREATED
-                )
-
-            
-            else:
-                return Response (
-                    {'Error':'You do not have permission to complete this operation'},
-                    status = status.HTTP_400_BAD_REQUEST
-                )
-
-
-
-
-        except:
-            return Response(
-                {'Error':'Internal server error when making payment'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
 def farmerMakePayment(request,id):
     
     form = FarmerMakePaymentForm(request.POST, request.FILES)
@@ -88,18 +34,24 @@ def farmerMakePayment(request,id):
         ins = InstallmentNumberModel.objects.get(pk=id)
     
         if form.is_valid():
+           amount = form.cleaned_data['amount']
+           fetchbalance=InstallmentNumberModel.objects.get(pk=id)
+           fetchbalance.balance=fetchbalance.balance - amount
+           fetchbalance.save()
            payment=form.save(commit=False)
            payment.installment_id = ins
            payment.user_id = request.user
            payment.save()
            messages.success(request, ("Your installment has been paid for"))
+           return 	HttpResponseRedirect('ManufacturerPaymentHistory')	
+           	
 
-    return render(request,'farmer/farmerMakePayment.html',{'form':form})
+    return render(request,'financefarmer/farmerMakePayment.html',{'form':form})
 
 def farmerPaymentHistory(request):
     user =request.user
     payment = PaymentLogModel.objects.filter(user_id = user )
-    return render(request,'farmer/farmerPaymentHistory.html',{'payment':payment})
+    return render(request,'financefarmer/farmerPaymentHistory.html',{'payment':payment})
 
 def ManufacturerPaymentHistory(request):
     user = request.user 

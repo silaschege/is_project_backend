@@ -6,12 +6,16 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent" >
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item ">
-          
-          <a class="nav-link" href="{% url 'FarmerInstallmentListView' %}">Installment</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'FarmerAddPlantsCategoryList' %}">Add Plant</a>
+  
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Installment
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'FarmerInstallmentListView' %}">All Installments</a>
+            <a class="dropdown-item" href="{% url 'FarmerAddPlantsCategoryList' %}">Add Installment</a>
+     
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'farmerCart' %}">Cart</a>
@@ -19,11 +23,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{%url 'farmerPaymentHistory' %}">Payment history</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Shipping</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Shipping History</a>
+    
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Shipping
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Current Shipping</a>
+            <a class="dropdown-item" href="#">Shipping History</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -36,9 +43,7 @@
             <a class="dropdown-item" href="#">Shipping </a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Payment</a>
-        </li>
+
       </ul>
       
 

@@ -14,7 +14,7 @@
                 <div class="card" style="width: 15rem;" >
                     <img class="card-img-top" src="{{ category.ProductCategory_image.url}}" alt="Category">
                     <div class="card-body">
-                      <h5 class="card-title">Name:{{ category.categoryName}}</h5>
+                      <h5 class="card-title">Category:{{ category.categoryName}}</h5>
                      
                       <a href="{% url 'FarmerAddPlantsList' category.id %}" class="btn btn-primary">Products</a>
                     </div>
