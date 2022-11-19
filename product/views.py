@@ -20,7 +20,7 @@ from django.http import HttpResponseRedirect
                
 def FarmerInstallmentsListView (request):
     user = request.user 
-    installmentNumber = InstallmentNumberModel.objects.filter(user_id=user)
+    installmentNumber = InstallmentNumberModel.objects.filter(user_id=user).filter(balance__gte=1)
     return render(request,'Farmerproducts/FarmerInstallmentList.html',{
         'installmentNumber':installmentNumber
     })

@@ -15,13 +15,15 @@ class InstallmentNumberModel(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
 
     def __str__(self):
-        return str(self.shipping_date)
+        return str(self.pk)
 
 
 class InstallmentModel(models.Model):
     installmentNumber = models.ForeignKey(InstallmentNumberModel,on_delete=models.SET_DEFAULT,default=1)
     productId = models.ForeignKey(ProductsModel,on_delete=models.SET_DEFAULT,default=1)
     quantity = models.IntegerField()
+    approved = models.BooleanField(default=False)
+    received = models.BooleanField(default=False)
 
     # status = models.TextChoices() this should have choices if paid or not paid
 

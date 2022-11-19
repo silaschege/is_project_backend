@@ -11,7 +11,7 @@ class FarmerMakePaymentForm(ModelForm):
         fields=('amount',)
         labels={
                 
-                'amount':'amount'
+                'amount':'Amount'
         }
         widgets={
             'amount': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Amount'}),

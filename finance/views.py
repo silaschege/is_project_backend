@@ -43,9 +43,9 @@ def farmerMakePayment(request,id):
            payment.user_id = request.user
            payment.save()
            messages.success(request, ("Your installment has been paid for"))
-           return 	HttpResponseRedirect('ManufacturerPaymentHistory')	
+           
            	
-
+    
     return render(request,'financefarmer/farmerMakePayment.html',{'form':form})
 
 def farmerPaymentHistory(request):

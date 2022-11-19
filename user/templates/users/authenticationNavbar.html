@@ -1,27 +1,27 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand" href=" ">
+    <a class="navbar-brand" href="{%url 'system-home' %} ">
       <img src="/media//productCategory_images/logo-removed.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
       
     </a>
  
     
   </div>
-  <a href="{% url 'Userlogin' %}" class="btn btn-outline-success btn-pull-right" role="button" aria-pressed="true">Login</a>
+  <ul class="navbar-nav ">
+  <li><a href="{% url 'Userlogin' %}" class="btn btn-outline-success btn-pull-right" role="button" aria-pressed="true">Login</a></li>
  
 
 
-    <!-- login -->
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle btn-pull-righ" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle   btn-outline-warning" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Register
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </div>
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'FarmerRegistration' %}">Farmer</a>
+        <a class="dropdown-item" href="{% url 'ManufacturerRegistration' %}">Manufacturer</a>
+    </li>
+    </ul>
 
   </nav>
 

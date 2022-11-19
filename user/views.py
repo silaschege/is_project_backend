@@ -144,5 +144,12 @@ def Userlogout(request):
 	logout(request)
 	messages.success(request, ("You Were Logged Out!"))
 	return redirect('system-home')
-   
+
+def FarmerRegistration(request):
+    
+    return render(request,'users/FarmerRegister.html',{})
+
+def ManufacturerRegistration(request):
+  
+    return render(request,'users/ManufacturerRegister.html',{})
    

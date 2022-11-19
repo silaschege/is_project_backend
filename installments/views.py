@@ -13,7 +13,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.db.models import Sum
 
 
@@ -149,18 +148,9 @@ def FarmerInstallmentDetailView(request,id):
 
 def ManufacturerAllInstallment(request):
     user = request.user
-    products=ProductsModel.objects.filter(productManufacturer=user).values('id')
+  
+    Installments= Installments= ManufacturerInstallmentRecord.objects.filter(productId__productManufacturer=user)
 
-    # Installments= InstallmentModel.objects.filter(productId__productManufacturer__icontains=user)
-    Installments= InstallmentModel.objects.filter(productId__in=products)
-    # Installments=[]
-    # for p in products:
-    #     item= InstallmentModel.objects.get(product_id=p['id'])
-    #     print(item)
-    #     Installments.append(item)
- 
-    
-    
     return  render(request,'installmentManufacturer/all_installments.html',{'Installments':Installments})
 
 def ManufacturerAllInstallmentReport (request):
