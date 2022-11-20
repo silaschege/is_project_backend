@@ -69,7 +69,8 @@ def farmerCart(request):
     for p in product_filter:
         item=ProductsModel.objects.get(pk=p['product_id'])
         itemcount = Cart.objects.filter(product_id=p['product_id']).filter(user=request.user)
-        total.append(item.productPrice)
+        itemquantity = Cart.objects.get(product_id=p['product_id'],user=request.user)
+        total.append(item.productPrice*itemquantity.quantity)
         allcartProducts.append(item)
         allcartItemQuantity.append(itemcount)
     allcartProducts 
@@ -83,8 +84,14 @@ def farmerCart(request):
 
 
 def FarmerCartRemove(request,id):
-    cart=Cart.objects.filter(product_id=id).filter(user=request.user)
-    cart.delete()
+    cart=Cart.objects.get(product_id=id,user=request.user)
+    quant = cart.quantity
+    if quant>1:
+        quantityupdated = cart.quantity-1
+        Cart.objects.filter(product_id=id,user=request.user).update(quantity=quantityupdated)
+    elif quant <=1:
+        cart.delete()
+    
     messages.info(request, ('Item removed from cart '))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

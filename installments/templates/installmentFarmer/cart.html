@@ -58,8 +58,9 @@
               <td>{{p.product_id}}</td>
               <td>{{p.quantity}}</td>
               
-              <td><a href="{%url  'FarmerCartRemove' p.id%} " type="button" class="btn btn-outline-danger">-</a></td>
-              <td><a type="button" class="btn btn-outline-success ">+</a></td>
+              <td><a href="{%url  'FarmerCartRemove' p.product_id.id%} " type="button" class="btn btn-outline-danger">-</a></td>
+              
+              <td><a type="button" class="btn btn-outline-success" href="{% url 'FarmerAddInstallmentHolder'   p.product_id.id%}">+</a></td>
             </tr>
             
             

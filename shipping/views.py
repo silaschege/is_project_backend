@@ -114,10 +114,8 @@ def ManufacturerShippingApproval(request):
         installmentShipping.append(ins)
     installmentShipping
 
-    print(installmentShipping)
+ 
 
-
-    
     return render(request,'shippingManufacturer/shippingApproval.html',{
     'installmentShipping':installmentShipping
     })
@@ -126,6 +124,22 @@ def ManufacturerShippingApproval_Approval(request,id):
     InstallmentModel.objects.filter(id=id).update(approved=True)
     messages.info(request, ('Shipping item approved'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def ManufacturerReceivedShipping(request):
+    user = request.user
+    shipping = ShippingRegister.objects.filter().values('installment')
+    print(shipping)
+    installmentShipping=[]
+    for i in shipping:
+        ins = InstallmentModel.objects.filter(installmentNumber=i['installment']).filter(productId__productManufacturer=user).filter(approved=True).filter(received=True)
+        installmentShipping.append(ins)
+    installmentShipping
+
+
+
+    return render(request,'shippingManufacturer/shippingReceived.html',{
+    'installmentShipping':installmentShipping
+    })
 
 
 

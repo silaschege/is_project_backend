@@ -34,13 +34,15 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{%url 'ManufacturerShippingApproval' %}">Approve Shipping</a>
-            <a class="dropdown-item" href=" ">Received Shipping</a>
+            <a class="dropdown-item" href="{% url 'ManufacturerReceivedShipping' %}">Received Shipping</a>
             <a class="dropdown-item" href=" ">Shipping Payments</a>
 
         
         </li>
  
-
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'ManufacturerShippingpayment'%}">Shipping Payment</a>
+        </li>
     
 
 

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from .models import PaymentLogModel
+from .models import PaymentLogModel,TotalPayment
 from installments.models import InstallmentModel,InstallmentNumberModel
 from .forms import FarmerMakePaymentForm
 from django.contrib import messages
@@ -27,7 +27,7 @@ from django.http import HttpResponseRedirect
 # the total paid amount and balance  is calculated befor being created
 # check if balance is zero and create the shipping and also if its zero before to deny payment
 def farmerMakePayment(request,id):
-    
+    user = request.user
     form = FarmerMakePaymentForm(request.POST, request.FILES)
     if request.method == "POST":
         form = FarmerMakePaymentForm(request.POST, request.FILES)
@@ -40,11 +40,21 @@ def farmerMakePayment(request,id):
            fetchbalance.save()
            payment=form.save(commit=False)
            payment.installment_id = ins
-           payment.user_id = request.user
+           payment.user_id = user
            payment.save()
-           messages.success(request, ("Your installment has been paid for"))
-           
-           	
+           check=TotalPayment.objects.filter(installment_id=id).filter(user_id=user).count()
+           if check >=1:
+                quantity_updated_filter=TotalPayment.objects.filter(installment_id=id).filter(user_id=user).first()
+                updatedamount =  quantity_updated_filter.amount+form.cleaned_data.get('amount')
+                print(amount)
+                messages.success(request, ("Your installment has been paid for"))
+                TotalPayment.objects.filter(installment_id=id).filter(user_id=user).update(amount=updatedamount)
+           elif check<1:
+                installment = InstallmentNumberModel.objects.get(pk=id)
+                TotalPayment.objects.create(installment_id=installment,user_id=request.user,amount=form.cleaned_data.get('amount'))
+                messages.success(request, ("Your installment has been paid for"))
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            
     
     return render(request,'financefarmer/farmerMakePayment.html',{'form':form})
 
@@ -52,6 +62,11 @@ def farmerPaymentHistory(request):
     user =request.user
     payment = PaymentLogModel.objects.filter(user_id = user )
     return render(request,'financefarmer/farmerPaymentHistory.html',{'payment':payment})
+
+def farmerAllPayment(request):
+    user =request.user
+    payment =TotalPayment.objects.filter(user_id = user )
+    return render(request,'financefarmer/farmerAllPayment.html',{'payment':payment})
 
 def ManufacturerPaymentHistory(request):
     user = request.user 
@@ -69,3 +84,7 @@ def ManufacturerPaymentHistory(request):
     payment
 
     return render(request,'manufacturer/manufacturerPaymentHistory.html',{'payment':payment})
+
+def ManufacturerShippingpayment(request):
+    return render(request,'manufacturer/manufacturerShippingPayment.html',{})
+

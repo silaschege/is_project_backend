@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from installments.models import InstallmentNumberModel
+from installments.models import InstallmentNumberModel,InstallmentModel
 
 
 # Create your models here.
@@ -11,5 +11,16 @@ class PaymentLogModel(models.Model):
     installment_id = models.ForeignKey(InstallmentNumberModel,on_delete=models.SET_DEFAULT,default=1)
     amount  = models.FloatField(max_length=7)
     timePaid = models.DateTimeField(auto_now_add=True)
+
+class TotalPayment(models.Model):
+    user_id =  models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
+    installment_id = models.ForeignKey(InstallmentNumberModel,on_delete=models.SET_DEFAULT,default=1)
+    amount  = models.FloatField(max_length=7)
+    timePaid = models.DateTimeField(auto_now_add=True)
+
+class ManufacturerShippingPayment(models.Model):
+    installment = models.ForeignKey(InstallmentModel,on_delete=models.SET_DEFAULT,default=1)
+    amount  = models.FloatField(max_length=7)
+
     
     

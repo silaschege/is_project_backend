@@ -1,5 +1,13 @@
 from django.urls import path
-from .views import FarmerReceiveShipping_Receive,FarmerShippingHistory,FarmerReceiveShipping,FarmercurrentShipping,ManufacturerShippingApproval,ManufacturerShippingApproval_Approval
+from .views import (
+    FarmerReceiveShipping_Receive,
+    FarmerShippingHistory,
+    FarmerReceiveShipping,
+    FarmercurrentShipping,
+    ManufacturerShippingApproval,
+    ManufacturerShippingApproval_Approval,
+    ManufacturerReceivedShipping,
+    )
 
 urlpatterns = [
     path('FarmercurrentShipping',FarmercurrentShipping,name='FarmercurrentShipping'),
@@ -9,6 +17,7 @@ urlpatterns = [
 ################################################################################################################################
     path('ManufacturerShippingApproval',ManufacturerShippingApproval,name='ManufacturerShippingApproval'),
     path('ManufacturerShippingApproval_Approval/<id>',ManufacturerShippingApproval_Approval,name='ManufacturerShippingApproval_Approval'),
+    path('ManufacturerReceivedShipping',  ManufacturerReceivedShipping,name='ManufacturerReceivedShipping'),
 
   
 ]
