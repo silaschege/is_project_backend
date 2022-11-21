@@ -6,7 +6,9 @@ farmerCreateInstallmentNumber,
 FarmerCreateInstallment,
 FarmerInstallmentDetailView,
 ManufacturerAllInstallment,
-ManufacturerAllInstallmentReport 
+ManufacturerAllInstallmentReport,
+AdminAllInstallmentsNumber,
+
 )
 urlpatterns = [
     path('FarmerAddInstallmentHolder/<product_id>',FarmerAddInstallmentHolder,name='FarmerAddInstallmentHolder'),
@@ -18,4 +20,6 @@ urlpatterns = [
 #######################################################################################################################
     path('ManufacturerAllInstallment',ManufacturerAllInstallment,name='ManufacturerAllInstallment'),
     path('ManufacturerAllInstallmentReport',ManufacturerAllInstallmentReport,name='ManufacturerAllInstallmentReport'),
+#######################################################################################################################
+    path('AdminAllInstallmentsNumber',AdminAllInstallmentsNumber,name='AdminAllInstallmentsNumber'),
 ]

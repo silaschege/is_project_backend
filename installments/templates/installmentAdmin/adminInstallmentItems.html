@@ -1,0 +1,28 @@
+{% extends 'admin/adminBase.html' %}
+
+
+{%block content%}
+
+    <div class='p-3'>
+        <table class="table table table-striped table table-hover table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for i in installment %}   
+              <tr>
+                <th>{{i.productId}}</th>
+                <td>{{i.quantity}}</td>
+              </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+</div>
+
+
+
+{%endblock%}

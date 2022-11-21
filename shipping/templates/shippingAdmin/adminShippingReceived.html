@@ -1,0 +1,39 @@
+{% extends 'admin/adminBase.html' %}
+{%block content%}
+<h1 class='d-flex justify-content-center'>Admin Shipping Received</h1>
+<div class='p-3'>
+    <table class="table table table-striped table table-hover table table-sm">
+        <thead>
+          <tr>
+            
+            <th scope="col">Installment Number</th>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+           
+    
+            
+            <th scope="col"> </th>
+          
+    
+          </tr>
+        </thead>
+        <tbody>
+    
+      {%for i in installment %}
+      
+        <tr>
+          
+          <td> {{i.installmentNumber}}</td>
+          <td> {{i.productId}}</td>
+          <td> {{i.quantity}}</td>
+          </tr>
+          
+    {%endfor%}
+    </tbody>
+    </table>
+    </div>
+    
+    
+    
+    </div>
+{%endblock%}

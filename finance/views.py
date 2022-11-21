@@ -86,8 +86,15 @@ def ManufacturerShippingpayment(request):
     user= request.user
     items=ManufacturerShippingPayment.objects.filter(installment__productId__productManufacturer=user)
     total=ManufacturerShippingPayment.objects.filter(installment__productId__productManufacturer=user).aggregate(Sum('amount'))
-    print(total)
-    
-    print(items)
+ 
+
     return render(request,'manufacturer/manufacturerShippingPayment.html',{'items':items,'total':total})
+
+def AdminAllFarmerPayment(request):
+    farmerPayment=TotalPayment.objects.all()
+    return render(request,'FinanceAdmin/adminFarmerPayment.html',{'farmerPayment':farmerPayment})
+
+def AdminAllManufacturerPaid(request):
+    manufacturerPayment=ManufacturerShippingPayment.objects.all()
+    return render(request,'FinanceAdmin/adminManufacturerPaid.html',{'manufacturerPayment':manufacturerPayment})
 

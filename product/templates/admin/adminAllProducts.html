@@ -1,0 +1,52 @@
+{% extends 'admin/adminBase.html' %}
+{%block content%}
+<div>
+    <h1 class='d-flex justify-content-center'> All Product </h1>
+    <div class='p-3'>
+        <table class="table table table-striped table table-hover table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Name</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">PackagingMetric</th>
+                <th scope="col">PackagingQuantity</th>
+  
+        
+              </tr>
+            </thead>
+            <tbody>
+        {% for installment in products %}
+        
+       
+        
+        
+              <tr>
+                <th><a>{{installment.productCategory}}</a></th>
+                <td>{{installment.productName}}</td>
+                <td>{{installment.productManufacturer.name}}</td>
+                <td>{{installment.productPrice}}</td>
+                <td>{{installment.productPieces}}</td>
+                <td>{{installment.packagingMetric}}</td>
+                <td>{{installment.packagingQuantity}}</td>
+               
+ 
+                
+             
+                
+           
+          
+              </tr>
+             
+        
+        
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+</div>
+
+
+{%endblock%}
