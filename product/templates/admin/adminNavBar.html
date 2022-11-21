@@ -6,44 +6,54 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'AdminAddCategoryU' %}">Add Product category </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'AdminAddPackagingMetric' %}">Add Product Packaging Metric</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'AdminAddPackagingQuantity' %}">Add Product Packaging Quantity</a>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Product Data
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'AdminAddCategoryU' %}">Products</a>
+              <a class="dropdown-item" href="{% url 'AdminAddCategoryU' %}">Category</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingMetric' %}">Packaging Metric</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingQuantity' %}">Packaging Quantity</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">All merchants</a>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Add Product
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+              <a class="dropdown-item" href="{% url 'AdminAddCategoryU' %}">Category</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingMetric' %}">Packaging Metric</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingQuantity' %}">Packaging Quantity</a>         
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">All merchant paymnent</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Installments
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+              <a class="dropdown-item" href="{% url 'AdminAddCategoryU' %}">Installments</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingMetric' %}">Installment Payment</a>
+                      
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">All client orders</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Shipping
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+              <a class="dropdown-item" href="{% url 'AdminAddCategoryU' %}">Proccessing</a>
+              <a class="dropdown-item" href="{% url 'AdminAddPackagingMetric' %}">Received</a>
+                   
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">All shipping</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">All shipping records</a>
-          </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="nav-link disabled" href="#">Disabled</a>
-        </li> -->
+    
+       
       </ul>
       
       <a href="{% url 'Userlogout' %}" class="btn btn-outline-danger" role="button" aria-pressed="true">Logout</a>

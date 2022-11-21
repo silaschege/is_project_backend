@@ -2,4 +2,42 @@
 
 {%block content%}
 <h1 class='d-flex justify-content-center'>Shipping Payment</h1>
+
+<div class='p-3'>
+    <table class="table table table-striped table table-hover table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Installment Item</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col"> </th>
+          
+    
+          </tr>
+        </thead>
+        <tbody>
+    {% for pay in items %}
+    
+    
+    
+    
+          <tr>
+            <td>{{pay.pk}}</td>
+            <td><a href=" "></a>{{pay.installment.productId}}</a></td>
+            <td>{{pay.amount}}</td>
+            
+          
+         
+            
+       
+      
+          </tr>
+         
+    
+    
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+<h1 class='d-flex justify-content-end p-3'><font color="green" >Total:{{total.amount__sum}}Ksh</font></h1>
 {%endblock%}

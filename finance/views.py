@@ -1,15 +1,12 @@
 from django.shortcuts import render
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from .models import PaymentLogModel,TotalPayment
+from .models import PaymentLogModel,TotalPayment,ManufacturerShippingPayment
 from installments.models import InstallmentModel,InstallmentNumberModel
 from .forms import FarmerMakePaymentForm
 from django.contrib import messages
-from product.models import ProductsModel
 from django.http import HttpResponseRedirect
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -86,5 +83,11 @@ def ManufacturerPaymentHistory(request):
     return render(request,'manufacturer/manufacturerPaymentHistory.html',{'payment':payment})
 
 def ManufacturerShippingpayment(request):
-    return render(request,'manufacturer/manufacturerShippingPayment.html',{})
+    user= request.user
+    items=ManufacturerShippingPayment.objects.filter(installment__productId__productManufacturer=user)
+    total=ManufacturerShippingPayment.objects.filter(installment__productId__productManufacturer=user).aggregate(Sum('amount'))
+    print(total)
+    
+    print(items)
+    return render(request,'manufacturer/manufacturerShippingPayment.html',{'items':items,'total':total})
 

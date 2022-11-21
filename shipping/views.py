@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 from installments.models import InstallmentModel, InstallmentNumberModel
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from finance.models import ManufacturerShippingPayment
+from product.models import ProductsModel
 
 # Create your views here.
 # create a new shipping
@@ -15,35 +17,6 @@ from django.http import HttpResponseRedirect
 # update shiping status
 # receive shipping
 # there should be one for retriving shipping
-
-class CreateShippingView(APIView):
-    def post(self,request):
-        try:
-            data = request.data
-
-            installment = data['insallment_id']
-            Shipping_status  = data['Shipping_status']
-
-            if not InstallmentModel.objects.filter(id=installment).exists():
-                return Response(
-                {'Error':'Installment does not exist'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-                )
-            
-            ShippingRegister.objects.create(
-                installment = installment,
-                Shipping_status = Shipping_status
-
-            )
-
-                
-            
-        except:
-            return Response(
-                {'Error':'Error occured when trying to create shipping'},
-                status= status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
 
 
 def FarmercurrentShipping(request):
@@ -55,7 +28,8 @@ def FarmercurrentShipping(request):
         insfilter = InstallmentNumberModel.objects.filter(pk=i['installment']).filter(user_id =user).values('id')
         print(insfilter)
         for p in insfilter:
-            ins=InstallmentModel.objects.filter(installmentNumber=p['id']).filter(approved=False)
+            ins=InstallmentModel.objects.filter(installmentNumber=p['id']).filter(approved=False).filter(approved=False)
+            
             installment.append(ins)
     installment
     print(installment)
@@ -74,6 +48,7 @@ def FarmerReceiveShipping(request):
         for p in insfilter:
             ins=InstallmentModel.objects.filter(installmentNumber=p['id']).filter(approved=True).filter(received=False)
             installment.append(ins)
+
     installment
     print(installment)
     return render(request,'shippingFarmer/FarmerReciveShipping.html',{
@@ -81,7 +56,33 @@ def FarmerReceiveShipping(request):
     })
 
 def FarmerReceiveShipping_Receive(request,id):
-    InstallmentModel.objects.filter(installmentNumber=id).update(received=True)
+    InstallmentModel.objects.filter(id=id).update(received=True)
+
+
+    installmentItem = InstallmentModel.objects.filter(id=id).values('productId','quantity')
+
+  
+
+    for i in installmentItem:  
+        product = ProductsModel.objects.get(pk=i['productId'])
+        print(product)
+        sum = product.productPrice * i['quantity']
+  
+   
+
+
+    check=ManufacturerShippingPayment.objects.filter(installment=id).count()
+    if check >=1:
+        quantity_updated_filter=ManufacturerShippingPayment.objects.filter(installment=id).first()
+        print(quantity_updated)
+        quantity_updated =  quantity_updated_filter.amount + totalvalue
+        print(quantity_updated)
+        ManufacturerShippingPayment.objects.filter(installment=installmentItem).update(amount=quantity_updated)
+        messages.info(request, ('Item added to cart '))
+    elif check<1:
+        ins = InstallmentModel.objects.get(id=id)
+        ManufacturerShippingPayment.objects.create(installment=ins,amount = sum)
+        
     messages.info(request, ('Shipping item received'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
