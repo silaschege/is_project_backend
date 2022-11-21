@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light  bg-white border-bottom">
+  <img src="/media//productCategory_images/logo-removed.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+      <ul class="navbar-nav mr-auto">
+  
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Installment
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'FarmerInstallmentListView' %}">All Installments</a>
+            <a class="dropdown-item" href="{% url 'FarmerAddPlantsCategoryList' %}">Add Installment</a>
+     
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'farmerCart' %}">Cart</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Payment 
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{%url 'farmerAllPayment' %}">All Payments</a>
+            <a class="dropdown-item" href="{%url 'farmerPaymentHistory' %}">Payment Logs</a>
+     
+
+    
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Shipping
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{%url 'FarmerReceiveShipping' %}">Receive Shipping</a>
+            <a class="dropdown-item" href="{%url 'FarmercurrentShipping' %}">Shipping Processing</a>
+            <a class="dropdown-item" href="{%url 'FarmerShippingHistory'%}">Shipping History</a>
+        </li>
+
+
+      </ul>
+      
+
+      <a href="{% url 'Userlogout' %}" class="btn  btn-outline-danger" role="button" aria-pressed="true">Logout</a>
+      
+    </div>
+  </nav>

@@ -1,0 +1,38 @@
+{% extends 'admin/adminBase.html' %}
+
+
+{%block content%}
+
+
+
+{% if submitted %}
+{{message}}
+    <div class="d-flex justify-content-center">
+        
+        <form action="" method=POST enctype="multipart/form-data">
+            <h2>Add Category</h2>
+			{% csrf_token %}
+
+			{{ form.as_p }}
+
+			<input type="submit" value="Submit" class="btn btn-secondary ">
+
+		</form>
+    </div>
+	{% else %}
+    <div class="d-flex justify-content-center">
+       
+        <form action="" method=POST>
+            <h2>Add Category</h2>
+			{% csrf_token %}
+
+			{{ form.as_p }}
+
+			<input type="submit" value="Submit" class="btn btn-secondary">
+
+		</form>
+    </div>
+	
+		{% endif %}
+
+{%endblock%}

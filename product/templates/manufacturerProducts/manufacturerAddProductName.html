@@ -1,0 +1,22 @@
+{% extends 'manufacturerProducts/manufacturerBase.html' %}
+
+{%block content%}
+
+
+
+<div class='d-flex justify-content-center'>
+<form action="" method=POST enctype="multipart/form-data" >
+  <h2>Manufacturer Add Name</h2>
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<input type="submit" value="Submit" class="btn btn-secondary">
+
+</form>
+</div> 
+
+  
+  </div>
+
+{%endblock%}

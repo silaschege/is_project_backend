@@ -1,0 +1,51 @@
+{% extends 'Farmerproducts/FarmerBase.html' %}
+
+
+{%block content%}
+
+  
+   <div class='p-3'>
+      <h2 class = 'd-flex justify-content-center'>Installment Items</h2>
+
+  
+
+
+
+       
+        </div class='p-3'> 
+        <table class="table table table-striped table table-hover table table-sm">
+          <thead>
+            <tr>
+              
+              <th scope="col">Product</th>
+              <th scope="col">Quantity</th>
+               <th scope="col"> </th>
+
+              
+            </tr>
+          </thead>
+          <tbody>
+  
+      
+      
+            {% for i in installments %}
+      
+            <tr>
+              
+              <td>{{i.productId}}</td>
+              <td>{{i.quantity}}</td>
+             
+            
+        
+            </tr>
+            {% endfor %}
+      
+
+      </tbody>
+      </table>
+      </div>
+    </div>
+      
+ 
+
+{%endblock%}

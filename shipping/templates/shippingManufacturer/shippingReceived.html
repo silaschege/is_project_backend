@@ -1,0 +1,47 @@
+{% extends 'manufacturerProducts/manufacturerBase.html' %}
+
+
+{%block content%}
+
+</div > 
+<h1 class='d-flex justify-content-center'>Received Shipping</h1>
+
+<div class='p-3'>
+<table class="table table table-striped table table-hover table table-sm">
+    <thead>
+      <tr>
+        
+        <th scope="col">Installment Number</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+       
+
+        
+        <th scope="col"> </th>
+      
+
+      </tr>
+    </thead>
+    <tbody>
+
+  {%for ins in installmentShipping %}
+  {%for i in ins %}
+    <tr>
+      
+      <td> {{i.installmentNumber}}</td>
+      <td> {{i.productId}}</td>
+      <td> {{i.quantity}}</td>
+      </tr>
+      {%endfor%}
+{%endfor%}
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+
+{%endblock%}

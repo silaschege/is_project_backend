@@ -1,0 +1,52 @@
+{% extends 'Farmerproducts/FarmerBase.html' %}
+
+
+{%block content%}
+
+</div > 
+<h1 class='d-flex justify-content-center'>Payment Log</h1>
+
+<div class='p-3'>
+<table class="table table table-striped table table-hover table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Installment Number</th>
+        <th scope="col">Amount</th>
+        <th scope="col"> </th>
+      
+
+      </tr>
+    </thead>
+    <tbody>
+{% for pay in payment %}
+
+
+
+
+      <tr>
+        <td>{{pay.pk}}</td>
+        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}"></a>{{pay.installment_id}}</a></td>
+        <td>{{pay.amount}}</td>
+        
+        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}" type="button" class="btn btn-outline-success" >Show Items</a></td>
+     
+        
+   
+  
+      </tr>
+     
+
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+
+{%endblock%}

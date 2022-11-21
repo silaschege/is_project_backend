@@ -1,0 +1,52 @@
+{% extends 'Farmerproducts/FarmerBase.html' %}
+
+
+{%block content%}
+
+</div > 
+<h1 class='d-flex justify-content-center'>Receive Shipping</h1>
+
+<div class='p-3'>
+<table class="table table table-striped table table-hover table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Installment Number</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Receive</th>
+        
+      
+
+      </tr>
+    </thead>
+    <tbody>
+      {%for inst in installment%}
+{% for ins in inst %}
+
+
+
+
+      <tr>
+        
+        <td> {{ins.installmentNumber}}</td>
+        <td> {{ins.productId}}</td>
+        <td> {{ins.quantity}}</td>
+        <td><a type="button" class="btn btn-outline-success " href="{% url 'FarmerReceiveShipping_Receive' ins.id%}">Receive</a></td>
+
+      </tr>
+     
+
+
+{% endfor %}
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+
+{%endblock%}

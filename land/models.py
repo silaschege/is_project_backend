@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 # # Create your models here.
 
-#   land_id int [pk, increment] 
+
 class LandRegisterModel(models.Model):
   country = models.CharField(max_length=255) 
   sub_county = models.CharField(max_length=255)

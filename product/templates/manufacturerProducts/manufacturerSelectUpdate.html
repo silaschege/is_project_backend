@@ -1,0 +1,49 @@
+{% extends 'manufacturerProducts/manufacturerBase.html' %}
+
+{%block content%}
+
+
+<h2 class='d-flex justify-content-center'>Store Item</h2>
+
+
+
+    {% for manufacture in manufacturerUpdate %}
+    {% if forloop.first %}<div class="row  pl-2">{% endif %}
+        <div class="container-sm">
+            <div class="card text-center" style="width: 30rem; height:38rem ;">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills ">
+                        <li class="nav-item padding-right">
+                          <a  href="{% url 'ManufacturerUpdateStore' manufacture.id %}"><button type="button" class="btn btn-outline-success">Update</button></a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a  href="{% url 'ManufacturerUpdateStore' manufacture.id %}"><button type="button" class="btn btn-outline-danger">Remove</button></a>
+                        </li>
+
+                      </ul>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Name:{{ manufacture.productName }}</h5>
+                  <p class="card-text">Category:{{ manufacture.productCategory}}</p>
+                  <p class="card-text">Price:Ksh{{ manufacture.productPrice}}</p>
+                  <p class="card-text">Packaging:{{ manufacture.packagingQuantity}}{{ manufacture.packagingMetric}}</p>
+                  <p class="card-text">Product Pieces:{{ manufacture.productPieces}}</p>
+                  <img class="img-thumbnail" src="{{ manufacture.productImage.url}}" alt="Manufacturer Update">
+                  
+                </div>
+        
+        
+        
+                </div>
+              </div>
+    {% if forloop.counter|divisibleby:5 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
+{% endfor %}
+    
+   
+
+  
+  </div>
+
+{%endblock%}

@@ -1,0 +1,48 @@
+{% extends 'manufacturerProducts/manufacturerBase.html' %}
+
+{%block content%}
+
+
+<p><h2 class='d-flex justify-content-center'/>Installments Reports</h2></p>
+<div class='d-flex justify-content-center'>
+
+
+<div style="position: relative; height:40vh; width:80vw">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [{%for ins in Installments%} '{{ins.productId}}', {%endfor%}],
+        datasets: [{
+          label: 'Installment Products',
+          data: [{%for i in Installments%} '{{i.quantity}}', {%endfor%}],
+          backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(255, 205, 86)',
+      'rgb(204, 204, 80)',
+      'rgb(99, 99, 99)',
+      'rgb(256, 256, 91)',
+    ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  
+</div>
+
+{%endblock%}
