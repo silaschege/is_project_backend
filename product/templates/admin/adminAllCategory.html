@@ -1,0 +1,76 @@
+{% extends 'admin/adminBase.html' %}
+{%block content%}
+<div>
+    <h1 class='d-flex justify-content-center'>All Category</h1>
+    <div class='p-3'>
+        <table class="table table table-striped table table-hover table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Category Name</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Update</th>
+                
+            
+  
+        
+              </tr>
+            </thead>
+            <tbody>
+        {% for installment in products %}
+        
+       
+        
+        
+              <tr>
+                <th><a>{{installment.categoryName}}</a></th>
+                
+                <td><a href="{% url 'AdminDeleteCategory' installment.id  %} " type="button" class="btn btn-outline-danger" >Delete</a></td>
+                <td>
+                  <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
+                      Update 
+                     </button>
+              </td>
+                               <!-- Modal -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method=POST enctype="multipart/form-data" > 
+              {% csrf_token %}
+              <h5 class='d-flex justify-content-center'>Insert Name</h5>
+           
+            
+            {{ form.as_p }}
+            <input type="submit" value="Submit" class="btn btn-btn-outline-success" href=" " >
+    
+            </form>
+
+          </div>
+    
+        </div>
+      </div>
+    </div>
+ 
+                
+             
+                
+           
+          
+              </tr>
+             
+        
+        
+        {% endfor %}
+        </tbody>
+        </table>
+        </div>
+</div>
+
+
+{%endblock%}

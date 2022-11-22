@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from installments.models import InstallmentModel,InstallmentNumberModel
 User = get_user_model()
 from manufacturer.models import ManufactureRegisterModel
-from .models import ProductCategoryModel, ProductNameModel,ProductsModel
+from .models import ProductCategoryModel, ProductNameModel,ProductsModel,PackagingMetric,PackagingQuantity
 
 from django.shortcuts import render, redirect
 from .forms import (ManufacturerAddProductForm,
@@ -127,6 +127,13 @@ def ManufacturerAddProductNameView(request):
             submitted = True
     return render(request, 'manufacturerProducts/manufacturerAddProductName.html', {'form':form, 'submitted':submitted})
 
+def ManufacturerProductNames(request):
+    product=ProductNameModel.objects.all()
+
+    return render(request, 'manufacturerProducts/manufacturerAllProductNames.html', {'product':product})
+
+
+
 
 
 ###########################################################################################################
@@ -138,7 +145,6 @@ def AdminAddCategory (request):
         if form.is_valid():
             form.save()
             messages.success(request, (" Your Category has been added succesfully!!!"))
-       
         return HttpResponseRedirect('AdminAddCategoryU?submitted=True')	
     else:
         form = AdminAddCategoryForm
@@ -176,6 +182,49 @@ def AdminAddPackagingQuantity(request):
         if 'submitted' in request.GET:
             submitted=True
     return render(request,'admin/addProductPackagingQuantity.html',{'form':form,'submitted':submitted})
+
+def AdminAllProducts(request):
+    products=ProductsModel.objects.all()
+    return render(request,'admin/adminAllProducts.html',{'products':products})
+
+def AdminAllCategory(request):
+    products=ProductCategoryModel.objects.all()
+    form_class = AdminAddCategoryForm
+    # if request is not post, initialize an empty form
+    form = form_class(request.POST,request.FILES or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.cleaned_data.get('categoryName')
+            form.cleaned_data.get('')
+            form.save()
+    return render(request,'admin/adminAllCategory.html',{'products':products,'form':form})
+
+def AdminAllPackagingMetric(request):
+    products=PackagingMetric.objects.all()
+    
+    return render(request,'admin/adminAllPackagingMetric.html',{'products':products})
+
+def AdminAllPackagingQuantity(request):
+    products=PackagingQuantity.objects.all()
+    return render(request,'admin/adminAllPackagingQuantity.html',{'products':products})
+
+def  AdminDeleteCategory(request,id):
+    products=ProductCategoryModel.objects.filter(id=id)
+    products.delete()
+    messages.success(request, (" Your Category has been deleted succesfully!!!"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def  AdminDeletePackagingMetric(request,id):
+    products=PackagingMetric.objects.filter(id=id)
+    products.delete()
+    messages.success(request, (" Your Packaging Metric has been deleted succesfully!!!"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def  AdminDeletePackagingQuantity(request,id):
+    products=PackagingQuantity.objects.filter(id=id)
+    products.delete()
+    messages.success(request, (" Your Packaging Metric has been deleted succesfully!!!"))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 

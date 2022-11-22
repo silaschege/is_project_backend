@@ -4,7 +4,9 @@ farmerMakePayment,
 farmerPaymentHistory,
 farmerAllPayment,
 ManufacturerPaymentHistory,
-ManufacturerShippingpayment
+ManufacturerShippingpayment,
+AdminAllFarmerPayment,
+AdminAllManufacturerPaid,
 
 )
 
@@ -16,4 +18,7 @@ urlpatterns = [
 #######################################################################################################################
     path('ManufacturerPaymentHistory',ManufacturerPaymentHistory,name='ManufacturerPaymentHistory'),
     path('ManufacturerShippingpayment',ManufacturerShippingpayment,name='ManufacturerShippingpayment'),
+#######################################################################################################################
+    path('AdminAllFarmerPayment',AdminAllFarmerPayment,name='AdminAllFarmerPayment'),
+    path('AdminAllManufacturerPaid',AdminAllManufacturerPaid,name='AdminAllManufacturerPaid'),
 ]

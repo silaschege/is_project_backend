@@ -7,6 +7,8 @@ from .views import (
     ManufacturerShippingApproval,
     ManufacturerShippingApproval_Approval,
     ManufacturerReceivedShipping,
+    AdminShippingProcessing,
+    AdminShippingReceived
     )
 
 urlpatterns = [
@@ -18,6 +20,9 @@ urlpatterns = [
     path('ManufacturerShippingApproval',ManufacturerShippingApproval,name='ManufacturerShippingApproval'),
     path('ManufacturerShippingApproval_Approval/<id>',ManufacturerShippingApproval_Approval,name='ManufacturerShippingApproval_Approval'),
     path('ManufacturerReceivedShipping',  ManufacturerReceivedShipping,name='ManufacturerReceivedShipping'),
+################################################################################################################################
+    path('AdminShippingProcessing',AdminShippingProcessing ,name='AdminShippingProcessing'),
+    path('AdminShippingReceived',AdminShippingReceived ,name='AdminShippingReceived'),
 
   
 ]

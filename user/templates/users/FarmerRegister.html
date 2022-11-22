@@ -1,7 +1,26 @@
 {% extends 'users/authenticationBase.html' %}
 
 {%block content%}
+{%include 'users/authenticationNavbar.html' %}
+{%if form.errors%}
 
-<h1>Farmer Register</h1>
 
+<div class="alert alert-warning alert-dismissible fade show " role="alert">
+    {{form.errors}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{%endif%}
+<div class="p-3">
+
+<form class ="col-md-4 offset-md-4 " action="{%url 'FarmerRegistration' %}" method=POST>
+    {%csrf_token%}
+    {{form.as_p}}
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>
 {%endblock%}

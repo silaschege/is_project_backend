@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework import permissions, status
 from django.contrib.auth import login,logout,authenticate
 from django.contrib import messages
+from .forms import FarmerRegistation
+
+
 
 
 
@@ -146,10 +149,38 @@ def Userlogout(request):
 	return redirect('system-home')
 
 def FarmerRegistration(request):
-    
-    return render(request,'users/FarmerRegister.html',{})
+    if request.method == 'POST':
+        form = FarmerRegistation(request.POST)
+        if form.is_valid():
+            user=form.save(commit=False)
+            user.is_farmer =True
+            user.save()
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password1')
+            account = authenticate(email=email,password=password)
+            login(request,account)
+            messages.info(request,('Succesfully registerd'))
+            return redirect('FarmerInstallmentListView')
+    else:
+        form = FarmerRegistation()
+    return render(request,'users/FarmerRegister.html',{'form':form})
 
 def ManufacturerRegistration(request):
+    if request.method == 'POST':
+        form = FarmerRegistation(request.POST)
+        if form.is_valid():
+                user=form.save(commit=False)
+                user.is_manufacturer =True
+                user.save()
+                email = form.cleaned_data.get('email')
+                password = form.cleaned_data.get('password1')
+                account = authenticate(email=email,password=password)
+                login(request,account)
+                messages.info(request,('Succesfully registerd'))
+                return redirect('ManufacturerStore')
+    else:
+        form = FarmerRegistation()
+        
   
-    return render(request,'users/ManufacturerRegister.html',{})
+    return render(request,'users/ManufacturerRegister.html',{'form':form})
    

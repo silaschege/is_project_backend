@@ -163,16 +163,13 @@ def ManufacturerAllInstallment(request):
 def ManufacturerAllInstallmentReport (request):
     user = request.user
     Installments= ManufacturerInstallmentRecord.objects.filter(productId__productManufacturer=user)
-    
- 
-    print(Installments)
-            
 
-    
-    
-    
     return render(request,'installmentManufacturer/manufaturerInstallmentsReport.html',{'Installments':Installments})
-
+##################################################################################################################################
+def AdminAllInstallmentsNumber(request):
+    installment = ManufacturerInstallmentRecord.objects.all()
+    print(installment)
+    return render(request,'installmentAdmin/adminInstallmentItems.html',{'installment':installment})
     
 # filter using the primary key saved in the add installmentholder model
 # create the installment number first then use last created to filter the latest one 
@@ -184,4 +181,5 @@ def ManufacturerAllInstallmentReport (request):
 
 # manufacturersee Installment
 # see install ments and there details and have an admin tempalte using charts to see installments
+
 

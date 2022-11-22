@@ -75,7 +75,7 @@ def FarmerReceiveShipping_Receive(request,id):
     if check >=1:
         quantity_updated_filter=ManufacturerShippingPayment.objects.filter(installment=id).first()
         print(quantity_updated)
-        quantity_updated =  quantity_updated_filter.amount + totalvalue
+        quantity_updated =  quantity_updated_filter.amount + sum
         print(quantity_updated)
         ManufacturerShippingPayment.objects.filter(installment=installmentItem).update(amount=quantity_updated)
         messages.info(request, ('Item added to cart '))
@@ -142,6 +142,16 @@ def ManufacturerReceivedShipping(request):
     'installmentShipping':installmentShipping
     })
 
+def AdminShippingProcessing(request):
+    installmentNumber = InstallmentNumberModel.objects.filter(balance=0)
+    for i in installmentNumber:
+        installment=InstallmentModel.objects.filter(approved=False).filter(received=False).filter(installmentNumber = i)
+        print(installment)
+    return render(request,'shippingAdmin/adminShippingProcessing.html',{'installment':installment})
+
+def AdminShippingReceived(request):
+    installment=InstallmentModel.objects.filter(approved=True).filter(received=True)
+    return render(request,'shippingAdmin/adminShippingReceived.html',{'installment':installment})
 
 
 

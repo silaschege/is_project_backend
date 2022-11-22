@@ -15,7 +15,7 @@ class InstallmentNumberModel(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.SET_DEFAULT,default=1)
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.shipping_date)
 
 
 class InstallmentModel(models.Model):

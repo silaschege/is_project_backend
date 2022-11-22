@@ -63,6 +63,8 @@ class AdminAddCategoryForm(ModelForm):
             'categoryName':forms.TextInput(attrs={'class':'form-control', 'placeholder':'Category Name'}),
         }
 
+
+
 class AdminAddProductPackagingMetric(ModelForm):
     class Meta:
         model = PackagingMetric
