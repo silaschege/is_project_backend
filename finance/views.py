@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 User = get_user_model()
 from .models import PaymentLogModel,TotalPayment,ManufacturerShippingPayment
@@ -46,11 +46,12 @@ def farmerMakePayment(request,id):
                 print(amount)
                 messages.success(request, ("Your installment has been paid for"))
                 TotalPayment.objects.filter(installment_id=id).filter(user_id=user).update(amount=updatedamount)
+                return redirect('farmerPaymentHistory')
            elif check<1:
                 installment = InstallmentNumberModel.objects.get(pk=id)
                 TotalPayment.objects.create(installment_id=installment,user_id=request.user,amount=form.cleaned_data.get('amount'))
                 messages.success(request, ("Your installment has been paid for"))
-                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                return redirect('farmerPaymentHistory')
             
     
     return render(request,'financefarmer/farmerMakePayment.html',{'form':form})

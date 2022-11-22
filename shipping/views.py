@@ -143,7 +143,10 @@ def ManufacturerReceivedShipping(request):
     })
 
 def AdminShippingProcessing(request):
-    installment=InstallmentModel.objects.filter(approved=False).filter(received=False)
+    installmentNumber = InstallmentNumberModel.objects.filter(balance=0)
+    for i in installmentNumber:
+        installment=InstallmentModel.objects.filter(approved=False).filter(received=False).filter(installmentNumber = i)
+        print(installment)
     return render(request,'shippingAdmin/adminShippingProcessing.html',{'installment':installment})
 
 def AdminShippingReceived(request):

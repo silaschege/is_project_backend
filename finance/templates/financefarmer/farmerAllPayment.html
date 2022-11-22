@@ -29,7 +29,7 @@
         <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}"></a>{{pay.installment_id}}</a></td>
         <td>{{pay.amount}}</td>
         
-        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id %}" type="button" class="btn btn-outline-success" >Show Items</a></td>
+        <td><a href="{% url 'FarmerInstallmentDetailView' pay.installment_id.id %}" type="button" class="btn btn-outline-success" >Show Items</a></td>
      
         
    

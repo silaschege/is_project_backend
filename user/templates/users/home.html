@@ -1,7 +1,307 @@
-{% extends 'users/authenticationBase.html' %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{%block content%}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Seed</title>
+    <style>
+        .container {
+    position:relative;
+    text-align: center;
+    color: rgb(239,105,55);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
 
-<h1>Home</h1>
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .context-dark, .bg-gray-dark, .bg-primary {
+    color: rgba(255, 255, 255, 0.8);
+}
 
-{%endblock%}
+.footer-classic a, .footer-classic a:focus, .footer-classic a:active {
+    color: #ffffff;
+}
+.nav-list li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.nav-list li a:hover:before {
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.social-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 23px;
+    font: 900 13px/1 "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+.social-container .col {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.nav-list li a:before {
+    content: "\f14f";
+    font: 400 21px/1 "Material Design Icons";
+    color: #4d6de6;
+    display: inline-block;
+    vertical-align: baseline;
+    margin-left: -28px;
+    margin-right: 7px;
+    opacity: 0;
+    visibility: hidden;
+    transition: .22s ease;
+}
+oijejrsorenfjeonsojnfklnsfmksmkd
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column_about {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card_about {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container_about {
+  padding: 0 16px;
+}
+
+.container_about::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title_about {
+  color: grey;
+}
+
+.button_about {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button_about:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+
+ 
+    </style>
+  </head>
+  <body>
+    
+
+
+
+<nav id="navbar-example2" class="navbar navbar-light bg-white px-3 sticky-top border-bottom">
+    <a class="navbar-brand" href="{%url 'system-home' %} ">
+        <img src="/media//productCategory_images/logo-removed.png" alt="" width="50" height="50" class="d-inline-block align-text-top">
+        
+      </a>
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyHeading1"  style="color: black">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyHeading2" style="color: black">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#scrollspyHeading3" style="color: black">Contact Us</a>
+      </li>
+
+      <li><a href="{% url 'Userlogin' %}" class="btn btn-outline-success btn-pull-right" role="button" aria-pressed="true">Login</a></li>
+       
+      
+      
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle   btn-outline-warning" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Register
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'FarmerRegistration' %}">Farmer</a>
+          <a class="dropdown-item" href="{% url 'ManufacturerRegistration' %}">Manufacturer</a>
+      </li>
+    </ul>
+    
+
+          
+  </nav>
+
+  <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+    <h4 id="scrollspyHeading1">
+
+        <div class="container"  >
+        <img src="media/general/home2.jpg" alt=""  width="100%" class="d-inline-block align-text-top">
+        <div class="centered"><h1> <font face="Gazpacho" size="100px" ><p>Wasi hustle</p>Hustle yako</font></h1></div>
+        
+        </div>
+
+    </h4>
+    <!-- £££££ -->
+    <h4 id="scrollspyHeading2"> </h4>
+    <p>
+  
+          
+          <h2 style="text-align:center" ><font face="Gazpacho" size="100px"  style="color:#ef6937">Our Team</font></h2>
+          <div class="row_about">
+            <div class="column_about">
+              <div class="card_about">
+                <img src="/media//productCategory_images/logo-removed.png" alt="Jane" style="width:100%">
+                <div class="container_about">
+                  <h2>Silas Kimani</h2>
+                  <p class="title_about">CEO & Founder</p>
+                  <p>After graduating from university, he created the organization. He has guided the organization through several stages, transforming it into an icon, an industry leader, and an agricultural partner.</p>
+                  <p>Skimani@seed.com</p>
+                 
+                </div>
+              </div>
+            </div>
+          
+            <div class="column_about">
+              <div class="card_about">
+                <img src="/media//productCategory_images/logo-removed.png" alt="Mike" style="width:100%">
+                <div class="container_about">
+                  <h2>Mike Olunga</h2>
+                  <p class="title_about">Chief Operation Officer</p>
+                  <p>Mike Olunga formerly served as the organization's (HCE) Head of Customer Excellence from 2010 to 2020, where he oversaw an award-winning customer service. He has a wealth of industrial experience.</p>
+                  <p>MOlunga@seed.com</p>
+               
+                </div>
+              </div>
+            </div>
+          
+            <div class="column_about">
+              <div class="card_about">
+                <img src="/media//productCategory_images/logo-removed.png" alt="John" style="width:100%">
+                <div class="container_about">
+                  <h2>Jake Makau</h2>
+                  <p class="title_about">Chief Engineer</p>
+                  <p>Jake holds a doctorate in artificial intelligence from MIT. Having worked for companies such as Google and Amazon Jake is known as the man in charge of all engineering work at Seed.</p>
+                  <p>JMakau@seed.com</p>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+    </p>
+
+<!-- £££££ -->
+<h2 style="text-align:center">---</h2>
+
+    <h4 id="scrollspyHeading3"> </h4>
+    <p>
+        <footer class="section footer-classic context-dark bg-image" style="background: #2d3246;">
+            <div class="container">
+              <div class="row row-30">
+                <div class="col-md-4 col-xl-5">
+                  <div class="pr-xl-4"><a class="brand" href="index.html">
+                    <img class="brand-logo-light" src=" " alt="" width="0" height="0" srcset=""></a>
+                    <p>We are a farm implements company.We enable small farmers get implemnts in installments</p>
+                    <!-- Rights-->
+                    <p class="rights"><span>©  </span><span class="copyright-year">2022</span><span> </span><span>Company</span><span> - </span><span>All Rights Reserved.</span></p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h5>Contacts</h5>
+                  <dl class="contact-list">
+                    <dt>Address:</dt>
+                    <dd>Tom Mboya Street</dd>
+                  </dl>
+                  <dl class="contact-list">
+                    <dt>email:</dt>
+                    <dd><a href="mailto:#">seed@seed.com</a></dd>
+                  </dl>
+                  <dl class="contact-list">
+                    <dt>phones:</dt>
+                    <dd><a href="tel:#">+25479886756</a> <span>or</span> <a href="tel:#">+25467896546</a>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-4 col-xl-3">
+                  <h5>Links</h5>
+                  <ul class="nav-list">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">Pricing</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row no-gutters social-container">
+              <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-facebook"></span><span>Facebook</span></a></div>
+              <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-instagram"></span><span>Instagram</span></a></div>
+              <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-twitter"></span><span>Twitter</span></a></div>
+              <div class="col"><a class="social-inner" href="#"><span class="icon mdi mdi-youtube-play"></span><span>Youtube</span></a></div>
+            </div>
+          </footer>
+    
+    </p>
+ 
+ 
+  </div>
+  
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
